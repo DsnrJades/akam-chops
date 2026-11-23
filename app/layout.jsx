@@ -15,6 +15,12 @@ const jakarta = Plus_Jakarta_Sans({
   display: 'swap',
 });
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+};
+
 export const metadata = {
   title: 'Akam Chops — Premium Small Chops, Shawarma & Nationwide Event Catering',
   description:

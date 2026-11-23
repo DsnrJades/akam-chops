@@ -18,10 +18,11 @@ import {
 } from 'lucide-react';
 import Navbar from './Navbar.jsx';
 import HeroScrollVideo from './HeroScrollVideo.jsx';
+import MenuShowcase from './MenuShowcase.jsx';
 import TiltCard3D from './TiltCard3D.jsx';
 import EventInquiryForm from './EventInquiryForm.jsx';
 import { useScrollReveal, useSmoothScroll } from '../hooks/useScrollReveal.js';
-import { BRAND, NAV_LINKS, MENU_CATEGORIES, EVENT_TIERS, REVIEWS } from '../data/akamData.js';
+import { BRAND, NAV_LINKS, EVENT_TIERS, REVIEWS } from '../data/akamData.js';
 
 const SECTION_IDS = NAV_LINKS.map((l) => l.id);
 
@@ -36,14 +37,10 @@ const MARQUEE_WORDS = [
 ];
 
 export default function AkamExperience() {
-  const [activeTab, setActiveTab] = useState(MENU_CATEGORIES[0].id);
   const [selectedItems, setSelectedItems] = useState([]);
 
   const { isScrolled, activeSection, progressBarRef, scrollToSection } = useSmoothScroll(SECTION_IDS);
-  useScrollReveal([activeTab]);
-
-  const currentCategory =
-    MENU_CATEGORIES.find((cat) => cat.id === activeTab) || MENU_CATEGORIES[0];
+  useScrollReveal([]);
 
   const toggleSelectItem = (itemName) => {
     setSelectedItems((prev) =>
@@ -158,96 +155,9 @@ export default function AkamExperience() {
       </section>
 
       {/* =================================================================
-          2. CURATED MENU SHOWCASE
+          2. CURATED FULL-BLEED PHOTO MENU SHOWCASE
          ================================================================= */}
-      <section id="menu" className="section section-warm">
-        <div className="container">
-          <div className="section-header" data-reveal="up">
-            <span className="eyebrow">
-              <span className="eyebrow-dot" />
-              The Menu You Deserve
-            </span>
-            <h2 className="display-lg">
-              Explore Our <span className="accent-text">Signature</span> Spread.
-            </h2>
-            <p className="section-lead">
-              Browse our small chops packs, peppered grills, shawarma, and Akam Naturals drinks.
-              Tap any item to add it straight into your event inquiry below.
-            </p>
-          </div>
-
-          <div className="menu-tabs" role="tablist" aria-label="Menu Categories" data-reveal="up">
-            {MENU_CATEGORIES.map((cat) => (
-              <button
-                key={cat.id}
-                type="button"
-                role="tab"
-                aria-selected={activeTab === cat.id}
-                className={`menu-tab-btn ${activeTab === cat.id ? 'is-active' : ''}`}
-                onClick={() => setActiveTab(cat.id)}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </div>
-
-          <div className="menu-showcase-layout">
-            <div className="menu-feature-photo" data-reveal="right">
-              <img src={currentCategory.image} alt={currentCategory.label} loading="lazy" decoding="async" />
-              <div className="menu-feature-caption">
-                <h3>{currentCategory.captionTitle}</h3>
-                <p>{currentCategory.captionText}</p>
-              </div>
-            </div>
-
-            <div className="menu-cards-grid">
-              {currentCategory.items.map((item, idx) => {
-                const isSelected = selectedItems.includes(item.name);
-                return (
-                  <div key={item.name} data-reveal="up" data-reveal-delay={idx * 75}>
-                    <TiltCard3D maxTilt={4}>
-                      <article className="menu-item-card">
-                        <div>
-                          <div className="menu-item-top" style={{ marginBottom: 10 }}>
-                            <h4>{item.name}</h4>
-                            <span className="menu-tag">{item.tag}</span>
-                          </div>
-                          <p className="menu-item-desc" style={{ marginBottom: 14 }}>
-                            {item.desc}
-                          </p>
-                          <div className="menu-chips">
-                            {item.contents.map((chip) => (
-                              <span key={chip} className="menu-chip">
-                                {chip}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-
-                        <button
-                          type="button"
-                          className={`menu-add-btn ${isSelected ? 'is-selected' : ''}`}
-                          onClick={() => toggleSelectItem(item.name)}
-                        >
-                          {isSelected ? (
-                            <>
-                              <Check size={15} /> Added to Event Inquiry
-                            </>
-                          ) : (
-                            <>
-                              <Plus size={15} /> Add to Event Inquiry
-                            </>
-                          )}
-                        </button>
-                      </article>
-                    </TiltCard3D>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
+      <MenuShowcase selectedItems={selectedItems} onToggleItem={toggleSelectItem} />
 
       {/* =================================================================
           3. EVENT CATERING PACKAGES + REVIEWS

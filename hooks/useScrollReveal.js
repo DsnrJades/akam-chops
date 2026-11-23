@@ -142,26 +142,28 @@ export function useSmoothScroll(sectionIds) {
       const onNativeScroll = () => updateOnScroll(window.scrollY);
       window.addEventListener('scroll', onNativeScroll, { passive: true });
 
-      const resizeObserver = new ResizeObserver(() => measureLayout());
-      resizeObserver.observe(document.body);
+      const resizeObserver =
+        typeof ResizeObserver !== 'undefined' ? new ResizeObserver(() => measureLayout()) : null;
+      if (resizeObserver) resizeObserver.observe(document.body);
       window.addEventListener('resize', measureLayout, { passive: true });
 
       return () => {
         window.removeEventListener('scroll', onNativeScroll);
-        resizeObserver.disconnect();
+        if (resizeObserver) resizeObserver.disconnect();
         window.removeEventListener('resize', measureLayout);
       };
     }
 
-    const resizeObserver = new ResizeObserver(() => measureLayout());
-    resizeObserver.observe(document.body);
+    const resizeObserver =
+      typeof ResizeObserver !== 'undefined' ? new ResizeObserver(() => measureLayout()) : null;
+    if (resizeObserver) resizeObserver.observe(document.body);
     window.addEventListener('resize', measureLayout, { passive: true });
 
     return () => {
       if (rafId) cancelAnimationFrame(rafId);
       if (lenis) lenis.destroy();
       lenisRef.current = null;
-      resizeObserver.disconnect();
+      if (resizeObserver) resizeObserver.disconnect();
       window.removeEventListener('resize', measureLayout);
     };
   }, [sectionIds]);

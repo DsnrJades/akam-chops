@@ -154,9 +154,10 @@ export default function HeroScrollVideo({ onScrollTo }) {
         <video
           ref={videoRef}
           className="hero-bg-video"
-          src="/videos/hero-samosa.mp4"
+          src="/videos/hero-samosa.mp4#t=0.001"
           muted
           playsInline
+          webkit-playsinline="true"
           preload="auto"
           disablePictureInPicture
           aria-hidden="true"
