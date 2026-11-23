@@ -20,6 +20,7 @@ import Navbar from './Navbar.jsx';
 import HeroScrollVideo from './HeroScrollVideo.jsx';
 import AboutAkam from './AboutAkam.jsx';
 import MenuShowcase from './MenuShowcase.jsx';
+import WhyChooseUsVideo from './WhyChooseUsVideo.jsx';
 import TiltCard3D from './TiltCard3D.jsx';
 import EventInquiryForm from './EventInquiryForm.jsx';
 import { useScrollReveal, useSmoothScroll } from '../hooks/useScrollReveal.js';
@@ -98,72 +99,9 @@ export default function AkamExperience() {
       <MenuShowcase selectedItems={selectedItems} onToggleItem={toggleSelectItem} />
 
       {/* =================================================================
-          4. WHY CHOOSE AKAM CHOPS (After Menu)
+          4. WHY CHOOSE AKAM CHOPS (Full-Width Scroll-Scrubbed Video + Glass Cards)
          ================================================================= */}
-      <section className="section section-warm">
-        <div className="container">
-          <div className="section-header" data-reveal="up">
-            <span className="eyebrow">
-              <span className="eyebrow-dot" />
-              Why Nigeria Chooses Akam Chops
-            </span>
-            <h2 className="display-lg">
-              Bold Flavor. <span className="accent-text">Obsessive</span> Detail.
-            </h2>
-            <p className="section-lead">
-              From our flagship kitchen to grand reception halls across Nigeria, every platter is
-              engineered to arrive crisp, aromatic, and camera-ready.
-            </p>
-          </div>
-
-          <div className="pillars-grid">
-            <div data-reveal="up" data-reveal-delay="0">
-              <TiltCard3D maxTilt={5}>
-                <article className="pillar-card">
-                  <div className="pillar-icon">
-                    <Utensils size={24} />
-                  </div>
-                  <h3>Crafted From Scratch Daily</h3>
-                  <p>
-                    Hand-wrapped spring rolls, crisp golden samosas, airy puff-puff, and tender
-                    peppered proteins — never reheated, always made fresh for your order.
-                  </p>
-                </article>
-              </TiltCard3D>
-            </div>
-
-            <div data-reveal="up" data-reveal-delay="110">
-              <TiltCard3D maxTilt={5}>
-                <article className="pillar-card">
-                  <div className="pillar-icon">
-                    <PackageCheck size={24} />
-                  </div>
-                  <h3>Signature Premium Packaging</h3>
-                  <p>
-                    Clean, heat-retaining Akam Chops kraft bags and event boxes — finished with
-                    our famous cutlery set and complimentary gum that guests always remember.
-                  </p>
-                </article>
-              </TiltCard3D>
-            </div>
-
-            <div data-reveal="up" data-reveal-delay="220">
-              <TiltCard3D maxTilt={5}>
-                <article className="pillar-card">
-                  <div className="pillar-icon">
-                    <Clock size={24} />
-                  </div>
-                  <h3>Effortless Nationwide Execution</h3>
-                  <p>
-                    Whether you are hosting 40 executives or 1,000+ wedding guests anywhere in
-                    Nigeria, our team delivers right on schedule so you can enjoy your day.
-                  </p>
-                </article>
-              </TiltCard3D>
-            </div>
-          </div>
-        </div>
-      </section>
+      <WhyChooseUsVideo />
 
       {/* =================================================================
           3. EVENT CATERING PACKAGES + REVIEWS
