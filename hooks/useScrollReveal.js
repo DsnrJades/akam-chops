@@ -32,10 +32,23 @@ export function useScrollReveal(deps = []) {
         });
       },
       {
-        threshold: 0.1,
-        rootMargin: '0px 0px -36px 0px',
+        threshold: 0.01,
+        rootMargin: '80px 0px 80px 0px',
       }
     );
+
+    const revealAboveFold = () => {
+      const vh = window.innerHeight || 800;
+      elements.forEach((el) => {
+        if (!el.classList.contains('is-visible')) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < vh + 60) {
+            el.classList.add('is-visible');
+            observer.unobserve(el);
+          }
+        }
+      });
+    };
 
     elements.forEach((el) => {
       if (!el.classList.contains('is-visible')) {
@@ -43,7 +56,13 @@ export function useScrollReveal(deps = []) {
       }
     });
 
-    return () => observer.disconnect();
+    revealAboveFold();
+    window.addEventListener('scroll', revealAboveFold, { passive: true });
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', revealAboveFold);
+    };
   }, deps);
 }
 
@@ -173,10 +192,10 @@ export function useSmoothScroll(sectionIds) {
     if (!el) return;
 
     if (lenisRef.current) {
-      lenisRef.current.scrollTo(el, { offset: -84, duration: 1.05 });
+      lenisRef.current.scrollTo(el, { offset: -16, duration: 1.05 });
     } else {
-      // Rock-solid smooth scroll for mobile Safari / Chrome
-      const top = el.getBoundingClientRect().top + window.scrollY - 78;
+      // Section already has 76px top padding, so -16 frames the heading cleanly under the navbar
+      const top = el.getBoundingClientRect().top + window.scrollY - 16;
       window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
     }
   }, []);
