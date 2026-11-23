@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import Navbar from './Navbar.jsx';
 import HeroScrollVideo from './HeroScrollVideo.jsx';
+import AboutAkam from './AboutAkam.jsx';
 import MenuShowcase from './MenuShowcase.jsx';
 import TiltCard3D from './TiltCard3D.jsx';
 import EventInquiryForm from './EventInquiryForm.jsx';
@@ -87,9 +88,19 @@ export default function AkamExperience() {
       </div>
 
       {/* =================================================================
-          BRAND CRAFT PILLARS
+          2. ABOUT AKAM CHOPS (Editorial 3-Column Welcome Section)
          ================================================================= */}
-      <section className="section">
+      <AboutAkam onScrollTo={scrollToSection} />
+
+      {/* =================================================================
+          3. CURATED FULL-BLEED PHOTO MENU SHOWCASE
+         ================================================================= */}
+      <MenuShowcase selectedItems={selectedItems} onToggleItem={toggleSelectItem} />
+
+      {/* =================================================================
+          4. WHY CHOOSE AKAM CHOPS (After Menu)
+         ================================================================= */}
+      <section className="section section-warm">
         <div className="container">
           <div className="section-header" data-reveal="up">
             <span className="eyebrow">
@@ -153,11 +164,6 @@ export default function AkamExperience() {
           </div>
         </div>
       </section>
-
-      {/* =================================================================
-          2. CURATED FULL-BLEED PHOTO MENU SHOWCASE
-         ================================================================= */}
-      <MenuShowcase selectedItems={selectedItems} onToggleItem={toggleSelectItem} />
 
       {/* =================================================================
           3. EVENT CATERING PACKAGES + REVIEWS
