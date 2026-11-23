@@ -155,7 +155,6 @@ export default function HeroScrollVideo({ onScrollTo }) {
           ref={videoRef}
           className="hero-bg-video"
           src="/videos/hero-samosa.mp4"
-          poster="/images/hero-platter.jpg"
           muted
           playsInline
           preload="auto"
