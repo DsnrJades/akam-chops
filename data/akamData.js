@@ -4,7 +4,7 @@
   handle: '@akamchopsabuja',
   tiktok: '@akamchops',
   instagramUrl: 'https://www.instagram.com/akamchopsabuja',
-  address: 'Suite C203, Mab Global Plaza, opposite FCMB Bank, Jabi Upstairs, Abuja',
+  address: 'Suite C203, Mab Global Plaza, opposite FCMB Bank, Jabi Upstairs, Abuja (Serving Events Nationwide)',
   phones: ['0907 227 8229', '0810 448 3435'],
   whatsappNumber: '2349072278229',
   email: 'Akamchopsabuja@gmail.com',
@@ -24,9 +24,9 @@ export const MENU_CATEGORIES = [
     id: 'small-chops',
     label: 'Small Chops Packs',
     image: '/images/hero-platter.jpg',
-    captionTitle: 'Golden. Crisp. Made Fresh in Jabi.',
+    captionTitle: 'Golden. Crisp. Crafted Fresh Daily.',
     captionText:
-      'Hand-rolled spring rolls and samosas, airy golden puff-puff, caramelized plantain mosa, and peppered proteins â€” packed hot for gatherings and Abuja events.',
+      'Hand-rolled spring rolls and samosas, airy golden puff-puff, caramelized plantain mosa, and peppered proteins — packed hot for gatherings and events across Nigeria.',
     items: [
       {
         name: 'Family Pack',
@@ -37,7 +37,7 @@ export const MENU_CATEGORIES = [
       {
         name: 'Small Pack',
         tag: 'Daily Favorite',
-        desc: 'Our signature balanced combo â€” crisp, savory, and sweet in every single bite.',
+        desc: 'Our signature balanced combo — crisp, savory, and sweet in every single bite.',
         contents: ['3 Spring Rolls', '3 Samosas', '6 Puff-Puff', '6 Mosa', '2 Peppered Beef', '1 Chicken', '1 Fizzy Drink'],
       },
       {
@@ -49,7 +49,7 @@ export const MENU_CATEGORIES = [
       {
         name: 'Bespoke Event Trays',
         tag: 'Custom Quote',
-        desc: 'Tailored 50-to-1,000+ guest trays for Abuja weddings, corporate summits, birthdays, and pageants.',
+        desc: 'Tailored 50-to-1,000+ guest trays for weddings, corporate summits, birthdays, and galas nationwide.',
         contents: ['Custom Ratios', 'Live Warm Service', 'Branded Packaging', 'Dedicated Event Team'],
       },
     ],
@@ -60,7 +60,7 @@ export const MENU_CATEGORIES = [
     image: '/images/grills-shawarma.jpg',
     captionTitle: 'Smoky, Spicy & Glazed to Perfection.',
     captionText:
-      'Slow-marinated Nigerian peppered proteins tossed in our signature aromatic Jabi pepper sauce â€” bold flavor with zero shortcuts.',
+      'Slow-marinated Nigerian peppered proteins tossed in our signature aromatic house pepper sauce — bold flavor with zero shortcuts.',
     items: [
       {
         name: 'Peppered Chicken',
@@ -76,15 +76,15 @@ export const MENU_CATEGORIES = [
       },
       {
         name: 'Peppered Gizzard',
-        tag: 'Abuja Classic',
-        desc: 'Perfectly tenderized gizzard sautÃ©ed with sweet bell peppers, onions, and fiery house spices.',
+        tag: 'Nigerian Classic',
+        desc: 'Perfectly tenderized gizzard sautéed with sweet bell peppers, onions, and fiery house spices.',
         contents: ['Party Favorite', 'Tray or Box Service'],
       },
       {
         name: 'Peppered Sausage & Chicken Legs',
         tag: 'Add-On',
         desc: 'Juicy grilled sausages and spiced chicken drumsticks crafted to elevate any cocktail table.',
-        contents: ['Great for Birthdays', 'Custom Mix'],
+        contents: ['Great for Celebrations', 'Custom Mix'],
       },
     ],
   },
@@ -92,12 +92,12 @@ export const MENU_CATEGORIES = [
     id: 'shawarma-pastries',
     label: 'Shawarma & Pastries',
     image: '/images/grills-shawarma.jpg',
-    captionTitle: 'Abujaâ€™s Most Talked-About Shawarma & Bakes.',
+    captionTitle: 'Unforgettable Shawarma & Oven-Fresh Bakes.',
     captionText:
       'Warm flaky pies, loaded creamy shawarma wraps, and crunchy jars of sweet chin-chin baked fresh every morning.',
     items: [
       {
-        name: 'Signature Abuja Shawarma',
+        name: 'Signature Loaded Shawarma',
         tag: 'Top Rated',
         desc: 'Generously loaded with spiced grilled chicken/beef, creamy house dressing, crisp veggies, and sausage.',
         contents: ['Single or Double Sausage', 'Complimentary Gum & Cutlery'],
@@ -117,8 +117,8 @@ export const MENU_CATEGORIES = [
       {
         name: 'Crispy Chin Chin & Plantain Chips',
         tag: 'Jar & Pouch',
-        desc: 'Sweet, ultra-crunchy artisanal chin-chin and golden plantain chips â€” perfect as event souvenirs.',
-        contents: ['Branded Event Tubs', 'Bulk Souvenir Orders'],
+        desc: 'Sweet, ultra-crunchy artisanal chin-chin and golden plantain chips — perfect as event souvenirs nationwide.',
+        contents: ['Branded Event Tubs', 'Nationwide Souvenir Orders'],
       },
     ],
   },
@@ -128,7 +128,7 @@ export const MENU_CATEGORIES = [
     image: '/images/akam-naturals.jpg',
     captionTitle: 'Pure, Chilled & Naturally Refreshing.',
     captionText:
-      'Our sister wellness line crafted with zero artificial preservatives â€” the ultimate cold pairing for hot small chops.',
+      'Our sister wellness line crafted with zero artificial preservatives — the ultimate cold pairing for hot small chops.',
     items: [
       {
         name: 'Spiced Zobo (35cl & 50cl)',
@@ -161,20 +161,20 @@ export const MENU_CATEGORIES = [
 export const EVENT_TIERS = [
   {
     name: 'Intimate Gatherings',
-    guests: '30 â€“ 80 Guests',
-    desc: 'Ideal for birthdays, bridal showers, housewarmings, and private family dinners across Abuja.',
+    guests: '30 – 80 Guests',
+    desc: 'Ideal for birthdays, bridal showers, housewarmings, and private family dinners.',
     featured: false,
     perks: [
       'Curated Small Chops & Peppered Grills',
       'Signature Akam kraft boxes or serving platters',
       'Optional Akam Naturals Zobo & Tiger Nut pairing',
-      'Prompt Jabi-to-doorstep warm delivery',
+      'Prompt, warm doorstep delivery & setup',
     ],
   },
   {
     name: 'Corporate & Brand Events',
-    guests: '80 â€“ 250 Guests',
-    desc: 'Designed for Abuja conferences, office launches, boardroom sessions, and beauty pageants.',
+    guests: '80 – 250 Guests',
+    desc: 'Designed for conferences, brand launches, executive summits, and pageants across Nigeria.',
     featured: true,
     perks: [
       'Individual VIP guest boxes with cutlery & mint gum',
@@ -185,8 +185,8 @@ export const EVENT_TIERS = [
   },
   {
     name: 'Grand Weddings & Galas',
-    guests: '250 â€“ 1,000+ Guests',
-    desc: 'Full-scale luxury cocktail hour & small chops service that keeps every table buzzing.',
+    guests: '250 – 1,000+ Guests',
+    desc: 'Full-scale nationwide luxury cocktail hour & small chops service that keeps every table buzzing.',
     featured: false,
     perks: [
       'High-volume freshly fried small chops & peppered skewers',
@@ -200,21 +200,20 @@ export const EVENT_TIERS = [
 export const REVIEWS = [
   {
     quote:
-      'The complimentary gum that comes together with the cutlery â€” such a thoughtful touch. You make the best shawarma I have ever tasted here in Abuja so far.',
+      'The complimentary gum that comes together with the cutlery — such a thoughtful touch. You make the best shawarma I have ever tasted so far.',
     author: '@__sham.ceeyarht',
-    context: 'Verified Instagram Customer Â· Abuja',
+    context: 'Verified Instagram Customer',
   },
   {
     quote:
-      'Lit packaging and genuinely the crispiest samosas and puff-puff in Jabi. Every box arrived piping hot for our weekend event.',
+      'Lit packaging and genuinely the crispiest samosas and puff-puff. Every box arrived piping hot and camera-ready for our weekend gala.',
     author: 'Queen of Queens Event Team',
-    context: 'Pageant & VIP Hospitality Â· Abuja',
+    context: 'Pageant & VIP Hospitality',
   },
   {
     quote:
-      'From the peppered gizzard to the chilled Akam Naturals tiger nut milk, our office guests kept asking who catered the spread.',
-    author: 'Abuja Corporate Client',
-    context: 'Mab Global Plaza & Jabi District',
+      'From the peppered gizzard to the chilled Akam Naturals tiger nut milk, our conference guests kept asking who catered the entire spread.',
+    author: 'Corporate Events Partner',
+    context: 'Nationwide Executive Summit',
   },
 ];
-

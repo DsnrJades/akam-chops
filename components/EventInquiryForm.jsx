@@ -28,16 +28,16 @@ export default function EventInquiryForm({ selectedItems, onRemoveItem, onClearI
   const buildSummaryText = () => {
     const itemsText = selectedItems.length ? selectedItems.join(', ') : 'Custom recommendation needed';
     return [
-      `Hello Akam Chops Abuja! I'd like to request an event quote:`,
-      `â€¢ Name: ${form.fullName}`,
-      `â€¢ Phone: ${form.phone}`,
-      `â€¢ Email: ${form.email}`,
-      `â€¢ Event Type: ${form.eventType}`,
-      `â€¢ Event Date: ${form.eventDate || 'TBD'}`,
-      `â€¢ Guest Count: ${form.guestCount}`,
-      `â€¢ Abuja Venue/Area: ${form.venue || 'Abuja'}`,
-      `â€¢ Interested Menu/Packages: ${itemsText}`,
-      form.notes ? `â€¢ Notes: ${form.notes}` : null,
+      `Hello Akam Chops! I'd like to request an event quote:`,
+      `• Name: ${form.fullName}`,
+      `• Phone: ${form.phone}`,
+      `• Email: ${form.email}`,
+      `• Event Type: ${form.eventType}`,
+      `• Event Date: ${form.eventDate || 'TBD'}`,
+      `• Guest Count: ${form.guestCount}`,
+      `• Event Venue & City: ${form.venue || 'Nigeria'}`,
+      `• Interested Menu/Packages: ${itemsText}`,
+      form.notes ? `• Notes: ${form.notes}` : null,
     ]
       .filter(Boolean)
       .join('\n');
@@ -65,7 +65,7 @@ export default function EventInquiryForm({ selectedItems, onRemoveItem, onClearI
         });
         setStatus('success');
         setFeedback(
-          'Your event request has been logged to our catering sheet and emailed directly to the Akam Chops Abuja team. Expect a response within 2 hours!'
+          'Your event request has been logged to our catering sheet and emailed directly to the Akam Chops team. Expect a response within 2 hours!'
         );
       } else {
         // Graceful live preview mode before the Google Apps Script URL is pasted into .env
@@ -89,7 +89,7 @@ export default function EventInquiryForm({ selectedItems, onRemoveItem, onClearI
     buildSummaryText()
   )}`;
   const mailtoUrl = `mailto:${BRAND.email}?subject=${encodeURIComponent(
-    `Event Catering Inquiry â€” ${form.eventType || 'Akam Chops Abuja'}`
+    `Event Catering Inquiry — ${form.eventType || 'Akam Chops'}`
   )}&body=${encodeURIComponent(buildSummaryText())}`;
 
   return (
@@ -103,8 +103,8 @@ export default function EventInquiryForm({ selectedItems, onRemoveItem, onClearI
           Request an Event Quote
         </h3>
         <p style={{ color: 'var(--ink-secondary)', fontSize: '0.94rem' }}>
-          No cart or checkout stress. Tell us about your event â€” your inquiry goes straight to our
-          catering sheet &amp; inbox at <strong>{BRAND.email}</strong>.
+          No cart or checkout stress. Tell us about your event anywhere in Nigeria — your inquiry
+          goes straight to our catering sheet &amp; inbox at <strong>{BRAND.email}</strong>.
         </p>
       </div>
 
@@ -234,13 +234,13 @@ export default function EventInquiryForm({ selectedItems, onRemoveItem, onClearI
         </div>
 
         <div className="form-group">
-          <label htmlFor="venue">Event Venue / Area in Abuja *</label>
+          <label htmlFor="venue">Event Venue &amp; City / State *</label>
           <input
             id="venue"
             name="venue"
             type="text"
             required
-            placeholder="e.g. Jabi, Wuse II, Maitama, Asokoro, Gwarinpa..."
+            placeholder="e.g. Abuja, Lagos, Port Harcourt, Enugu, Kano..."
             className="form-input"
             value={form.venue}
             onChange={handleChange}

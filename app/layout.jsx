@@ -16,9 +16,9 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata = {
-  title: 'Akam Chops — Premium Small Chops, Shawarma & Event Catering in Abuja',
+  title: 'Akam Chops — Premium Small Chops, Shawarma & Nationwide Event Catering',
   description:
-    'The Taste You Deserve. Premium Nigerian small chops, signature Abuja shawarma, peppered grills, Akam Naturals drinks, and bespoke event catering from Jabi, Abuja.',
+    'The Taste You Deserve. Premium Nigerian small chops, signature shawarma, peppered grills, Akam Naturals drinks, and bespoke event catering across Nigeria.',
   icons: {
     icon: '/images/akam-logo.png',
   },

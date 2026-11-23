@@ -31,8 +31,8 @@ const MARQUEE_WORDS = [
   'Signature Shawarma',
   'Peppered Grills',
   'Akam Naturals',
-  'Abuja Event Catering',
-  'Jabi Flagship',
+  'Nationwide Catering',
+  'Crafted Fresh Daily',
   'The Taste You Deserve',
 ];
 
@@ -82,15 +82,16 @@ export default function AkamExperience() {
             <div className="hero-copy">
               <span className="eyebrow" data-reveal="up" data-reveal-delay="0">
                 <span className="eyebrow-dot" />
-                Jabi, Abuja
+                Nationwide Catering · Nigeria
               </span>
 
               <h1 className="display-xl" data-reveal="up" data-reveal-delay="90">
-                THE TASTE <span className="accent-text">ABUJA</span> DESERVES.
+                THE TASTE <span className="accent-text">YOU</span> DESERVE.
               </h1>
 
               <p className="hero-subtitle" data-reveal="up" data-reveal-delay="170">
-                Freshly crafted small chops, signature shawarma, and effortless event catering.
+                Freshly crafted small chops, signature shawarma, and seamless event catering across
+                Nigeria.
               </p>
 
               <div className="hero-cta-row" data-reveal="up" data-reveal-delay="240">
@@ -144,14 +145,14 @@ export default function AkamExperience() {
           <div className="section-header" data-reveal="up">
             <span className="eyebrow">
               <span className="eyebrow-dot" />
-              Why Abuja Chooses Akam Chops
+              Why Nigeria Chooses Akam Chops
             </span>
             <h2 className="display-lg">
               Bold Flavor. <span className="accent-text">Obsessive</span> Detail.
             </h2>
             <p className="section-lead">
-              From our Jabi kitchen to Abujaâ€™s grandest reception halls, every platter is engineered
-              to arrive crisp, aromatic, and camera-ready.
+              From our flagship kitchen to grand reception halls across Nigeria, every platter is
+              engineered to arrive crisp, aromatic, and camera-ready.
             </p>
           </div>
 
@@ -165,7 +166,7 @@ export default function AkamExperience() {
                   <h3>Crafted From Scratch Daily</h3>
                   <p>
                     Hand-wrapped spring rolls, crisp golden samosas, airy puff-puff, and tender
-                    peppered proteins â€” never reheated, always made fresh for your order.
+                    peppered proteins — never reheated, always made fresh for your order.
                   </p>
                 </article>
               </TiltCard3D>
@@ -179,7 +180,7 @@ export default function AkamExperience() {
                   </div>
                   <h3>Signature Premium Packaging</h3>
                   <p>
-                    Clean, heat-retaining Akam Chops kraft bags and event boxes â€” finished with
+                    Clean, heat-retaining Akam Chops kraft bags and event boxes — finished with
                     our famous cutlery set and complimentary gum that guests always remember.
                   </p>
                 </article>
@@ -192,10 +193,10 @@ export default function AkamExperience() {
                   <div className="pillar-icon">
                     <Clock size={24} />
                   </div>
-                  <h3>Effortless Event Execution</h3>
+                  <h3>Effortless Nationwide Execution</h3>
                   <p>
-                    Whether you are hosting 40 executives in Wuse II or 800 wedding guests in
-                    Maitama, our team delivers right on schedule so you can enjoy your day.
+                    Whether you are hosting 40 executives or 1,000+ wedding guests anywhere in
+                    Nigeria, our team delivers right on schedule so you can enjoy your day.
                   </p>
                 </article>
               </TiltCard3D>
@@ -304,14 +305,14 @@ export default function AkamExperience() {
           <div className="section-header section-header-center" data-reveal="up">
             <span className="eyebrow">
               <span className="eyebrow-dot" />
-              Abuja Event Catering
+              Nationwide Event Catering
             </span>
             <h2 className="display-lg">
               Built to <span className="accent-text">Elevate</span> Every Occasion.
             </h2>
             <p className="section-lead">
-              Weddings, corporate summits, birthdays, and pageants â€” we scale our signature Jabi
-              quality to any guest count without losing an ounce of crunch.
+              Weddings, corporate summits, birthdays, and galas — we scale our signature craft to
+              celebrations across Nigeria without losing an ounce of crunch.
             </p>
           </div>
 
@@ -319,7 +320,7 @@ export default function AkamExperience() {
             <div className="events-banner-img">
               <img
                 src="/images/event-catering.jpg"
-                alt="Akam Chops luxury event catering spread in Abuja"
+                alt="Akam Chops luxury event catering spread"
                 loading="lazy"
                 decoding="async"
               />
@@ -333,10 +334,10 @@ export default function AkamExperience() {
               </h3>
               <p style={{ color: 'var(--ink-secondary)', fontSize: '0.96rem' }}>
                 Pair our signature small chops with chilled Akam Naturals Zobo &amp; Tiger Nut Milk
-                for a complete, memorable refreshment experience across Abuja.
+                for a complete, memorable refreshment experience anywhere in Nigeria.
               </p>
               <div>
-                <a href="#contact" className="btn btn-primary">
+                <a href="#contact" className="btn btn-primary" onClick={(e) => handleAnchor(e, 'contact')}>
                   Plan Your Event Menu
                   <ArrowRight size={17} />
                 </a>
@@ -368,7 +369,7 @@ export default function AkamExperience() {
                               color: 'var(--orange-primary)',
                             }}
                           >
-                            â˜… MOST BOOKED
+                            ★ MOST BOOKED
                           </span>
                         )}
                       </div>
@@ -418,9 +419,9 @@ export default function AkamExperience() {
                     <Star key={i} size={16} fill="currentColor" />
                   ))}
                 </div>
-                <p className="review-quote">â€œ{rev.quote}â€</p>
+                <p className="review-quote">“{rev.quote}”</p>
                 <div className="review-author">
-                  {rev.author} Â· {rev.context}
+                  {rev.author} · {rev.context}
                 </div>
               </article>
             ))}
@@ -441,11 +442,11 @@ export default function AkamExperience() {
                   Visit or Book Us
                 </span>
                 <h2 className="display-lg">
-                  Letâ€™s Feed Your <span className="accent-text">Next Event.</span>
+                  Let’s Feed Your <span className="accent-text">Next Event.</span>
                 </h2>
                 <p className="section-lead">
-                  Drop by our Jabi flagship for fresh daily orders, or send your event details using
-                  the form â€” no complicated checkout, just fast human hospitality.
+                  Visit our flagship kitchen for fresh daily orders, or send your event details from
+                  anywhere in Nigeria — no complicated checkout, just fast human hospitality.
                 </p>
               </div>
 
@@ -455,7 +456,7 @@ export default function AkamExperience() {
                     <MapPin size={20} />
                   </div>
                   <div>
-                    <strong>Jabi Flagship Kitchen</strong>
+                    <strong>Flagship Kitchen · Nationwide Catering</strong>
                     <span>{BRAND.address}</span>
                   </div>
                 </div>
@@ -493,7 +494,7 @@ export default function AkamExperience() {
                   <div>
                     <strong>Follow the Crunch</strong>
                     <a href={BRAND.instagramUrl} target="_blank" rel="noreferrer">
-                      {BRAND.handle} on Instagram Â· {BRAND.tiktok} on TikTok
+                      {BRAND.handle} on Instagram · {BRAND.tiktok} on TikTok
                     </a>
                   </div>
                 </div>
@@ -517,13 +518,18 @@ export default function AkamExperience() {
       <footer className="footer">
         <div className="container">
           <div className="footer-inner">
-            <a href="#experience" className="nav-logo" aria-label="Akam Chops top">
+            <a href="#experience" className="nav-logo" aria-label="Akam Chops top" onClick={(e) => handleAnchor(e, 'experience')}>
               <img src="/images/akam-logo.png" alt="Akam Chops" />
             </a>
 
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24, fontWeight: 600 }}>
               {NAV_LINKS.map((link) => (
-                <a key={link.id} href={`#${link.id}`} style={{ color: 'var(--ink-secondary)' }}>
+                <a
+                  key={link.id}
+                  href={`#${link.id}`}
+                  style={{ color: 'var(--ink-secondary)' }}
+                  onClick={(e) => handleAnchor(e, link.id)}
+                >
                   {link.label}
                 </a>
               ))}
@@ -532,9 +538,9 @@ export default function AkamExperience() {
 
           <div className="footer-bottom">
             <span>
-              Â© {new Date().getFullYear()} {BRAND.name} Abuja â€” {BRAND.tagline}.
+              © {new Date().getFullYear()} {BRAND.name} — {BRAND.tagline}.
             </span>
-            <span>Suite C203, Mab Global Plaza, Jabi, Abuja</span>
+            <span>Nationwide Event Catering · Flagship Kitchen: Mab Global Plaza, Jabi, Abuja</span>
           </div>
         </div>
       </footer>
