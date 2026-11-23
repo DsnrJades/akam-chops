@@ -17,8 +17,7 @@ import {
   Utensils,
 } from 'lucide-react';
 import Navbar from './Navbar.jsx';
-import dynamic from 'next/dynamic';
-const HeroScene3D = dynamic(() => import('./HeroScene3D.jsx'), { ssr: false });
+import HeroScrollVideo from './HeroScrollVideo.jsx';
 import TiltCard3D from './TiltCard3D.jsx';
 import EventInquiryForm from './EventInquiryForm.jsx';
 import { useScrollReveal, useSmoothScroll } from '../hooks/useScrollReveal.js';
@@ -72,56 +71,9 @@ export default function AkamExperience() {
       />
 
       {/* =================================================================
-          1. HERO SECTION (Airy Light Premium + 3D Floating Small Chops)
+          1. FULL-BLEED 1080P SCROLL-SCRUBBED VIDEO HERO
          ================================================================= */}
-      <section id="experience" className="hero-section">
-        <HeroScene3D />
-
-        <div className="container">
-          <div className="hero-grid">
-            <div className="hero-copy">
-              <span className="eyebrow" data-reveal="up" data-reveal-delay="0">
-                <span className="eyebrow-dot" />
-                Nationwide Catering · Nigeria
-              </span>
-
-              <h1 className="display-xl" data-reveal="up" data-reveal-delay="90">
-                THE TASTE <span className="accent-text">YOU</span> DESERVE.
-              </h1>
-
-              <p className="hero-subtitle" data-reveal="up" data-reveal-delay="170">
-                Freshly crafted small chops, signature shawarma, and seamless event catering across
-                Nigeria.
-              </p>
-
-              <div className="hero-cta-row" data-reveal="up" data-reveal-delay="240">
-                <a href="#contact" className="btn btn-primary" onClick={(e) => handleAnchor(e, 'contact')}>
-                  Request Event Quote
-                  <ArrowRight size={18} />
-                </a>
-                <a href="#menu" className="btn btn-secondary" onClick={(e) => handleAnchor(e, 'menu')}>
-                  Explore Menu
-                </a>
-              </div>
-            </div>
-
-            <div className="hero-visual-stage" data-reveal="scale" data-reveal-delay="180">
-              <TiltCard3D maxTilt={6}>
-                <div className="hero-platter-card">
-                  <div className="hero-platter-img-wrap">
-                    <img
-                      src="/images/hero-platter.jpg"
-                      alt="Akam Chops signature luxury small chops platter"
-                      fetchPriority="high"
-                      decoding="async"
-                    />
-                  </div>
-                </div>
-              </TiltCard3D>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroScrollVideo onScrollTo={scrollToSection} />
 
       {/* =================================================================
           EDITORIAL BRAND MARQUEE
