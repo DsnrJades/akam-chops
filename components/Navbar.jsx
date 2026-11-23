@@ -7,28 +7,23 @@ import { NAV_LINKS } from '../data/akamData.js';
 /**
  * Sticky Glass Navigation Bar:
  * - Genuine Akam Chops transparent logo
- * - Four smooth-scroll links with active section highlighting
- * - Subtle frosted glass morphism effect on scroll + orange scroll progress bar
+ * - Four smooth-scroll links powered by Lenis
+ * - GPU-composited scroll progress bar (zero React re-renders on scroll)
  */
-export default function Navbar({ isScrolled, scrollProgress, activeSection }) {
+export default function Navbar({ isScrolled, activeSection, progressBarRef, onScrollTo }) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleNavClick = (e, id) => {
     e.preventDefault();
     setMobileOpen(false);
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (onScrollTo) {
+      onScrollTo(id);
     }
   };
 
   return (
     <>
-      <div
-        className="scroll-progress-bar"
-        style={{ width: `${scrollProgress}%` }}
-        aria-hidden="true"
-      />
+      <div ref={progressBarRef} className="scroll-progress-bar" aria-hidden="true" />
 
       <header className={`nav-wrapper ${isScrolled ? 'is-scrolled' : ''}`}>
         <div className="container">
@@ -39,7 +34,7 @@ export default function Navbar({ isScrolled, scrollProgress, activeSection }) {
               onClick={(e) => handleNavClick(e, 'experience')}
               aria-label="Akam Chops Home"
             >
-              <img src="/images/akam-logo.png" alt="Akam Chops" />
+              <img src="/images/akam-logo.png" alt="Akam Chops" width={92} height={44} />
             </a>
 
             <ul className="nav-links">
@@ -106,4 +101,3 @@ export default function Navbar({ isScrolled, scrollProgress, activeSection }) {
     </>
   );
 }
-

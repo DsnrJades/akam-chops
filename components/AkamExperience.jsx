@@ -21,7 +21,7 @@ import dynamic from 'next/dynamic';
 const HeroScene3D = dynamic(() => import('./HeroScene3D.jsx'), { ssr: false });
 import TiltCard3D from './TiltCard3D.jsx';
 import EventInquiryForm from './EventInquiryForm.jsx';
-import { useScrollReveal, useScrollNav } from '../hooks/useScrollReveal.js';
+import { useScrollReveal, useSmoothScroll } from '../hooks/useScrollReveal.js';
 import { BRAND, NAV_LINKS, MENU_CATEGORIES, EVENT_TIERS, REVIEWS } from '../data/akamData.js';
 
 const SECTION_IDS = NAV_LINKS.map((l) => l.id);
@@ -40,7 +40,7 @@ export default function AkamExperience() {
   const [activeTab, setActiveTab] = useState(MENU_CATEGORIES[0].id);
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const { isScrolled, scrollProgress, activeSection } = useScrollNav(SECTION_IDS);
+  const { isScrolled, activeSection, progressBarRef, scrollToSection } = useSmoothScroll(SECTION_IDS);
   useScrollReveal([activeTab]);
 
   const currentCategory =
@@ -54,18 +54,21 @@ export default function AkamExperience() {
 
   const selectPackageAndScroll = (packageName) => {
     setSelectedItems((prev) => (prev.includes(packageName) ? prev : [...prev, packageName]));
-    const contactEl = document.getElementById('contact');
-    if (contactEl) {
-      contactEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    scrollToSection('contact');
+  };
+
+  const handleAnchor = (e, id) => {
+    e.preventDefault();
+    scrollToSection(id);
   };
 
   return (
     <div className="akam-app">
       <Navbar
         isScrolled={isScrolled}
-        scrollProgress={scrollProgress}
         activeSection={activeSection}
+        progressBarRef={progressBarRef}
+        onScrollTo={scrollToSection}
       />
 
       {/* =================================================================
@@ -91,11 +94,11 @@ export default function AkamExperience() {
               </p>
 
               <div className="hero-cta-row" data-reveal="up" data-reveal-delay="240">
-                <a href="#contact" className="btn btn-primary">
+                <a href="#contact" className="btn btn-primary" onClick={(e) => handleAnchor(e, 'contact')}>
                   Request Event Quote
                   <ArrowRight size={18} />
                 </a>
-                <a href="#menu" className="btn btn-secondary">
+                <a href="#menu" className="btn btn-secondary" onClick={(e) => handleAnchor(e, 'menu')}>
                   Explore Menu
                 </a>
               </div>
@@ -108,6 +111,8 @@ export default function AkamExperience() {
                     <img
                       src="/images/hero-platter.jpg"
                       alt="Akam Chops signature luxury small chops platter"
+                      fetchPriority="high"
+                      decoding="async"
                     />
                   </div>
                 </div>
@@ -235,7 +240,7 @@ export default function AkamExperience() {
 
           <div className="menu-showcase-layout">
             <div className="menu-feature-photo" data-reveal="right">
-              <img src={currentCategory.image} alt={currentCategory.label} />
+              <img src={currentCategory.image} alt={currentCategory.label} loading="lazy" decoding="async" />
               <div className="menu-feature-caption">
                 <h3>{currentCategory.captionTitle}</h3>
                 <p>{currentCategory.captionText}</p>
@@ -315,6 +320,8 @@ export default function AkamExperience() {
               <img
                 src="/images/event-catering.jpg"
                 alt="Akam Chops luxury event catering spread in Abuja"
+                loading="lazy"
+                decoding="async"
               />
             </div>
             <div className="events-banner-body">

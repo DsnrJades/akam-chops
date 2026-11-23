@@ -3,34 +3,45 @@
 import React, { useRef } from 'react';
 
 /**
- * Interactive 3D Spatial Tilt Card
- * Adds smooth CSS 3D perspective rotation + warm specular light sheen on hover.
+ * Lightweight 3D Spatial Tilt Card (rAF-throttled for 120fps scroll & hover)
  */
-export default function TiltCard3D({ children, className = '', maxTilt = 7 }) {
+export default function TiltCard3D({ children, className = '', maxTilt = 6 }) {
   const cardRef = useRef(null);
   const sheenRef = useRef(null);
+  const rafRef = useRef(null);
 
   const handleMove = (e) => {
     const el = cardRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width;
-    const y = (e.clientY - rect.top) / rect.height;
+    if (!el || rafRef.current) return;
 
-    const rotY = (x - 0.5) * (maxTilt * 2);
-    const rotX = (0.5 - y) * (maxTilt * 2);
+    const clientX = e.clientX;
+    const clientY = e.clientY;
 
-    el.style.transform = `perspective(1000px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translateZ(6px)`;
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = null;
+      const rect = el.getBoundingClientRect();
+      const x = (clientX - rect.left) / rect.width;
+      const y = (clientY - rect.top) / rect.height;
 
-    if (sheenRef.current) {
-      sheenRef.current.style.background = `radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(255, 255, 255, 0.42), transparent 60%)`;
-    }
+      const rotY = (x - 0.5) * (maxTilt * 2);
+      const rotX = (0.5 - y) * (maxTilt * 2);
+
+      el.style.transform = `perspective(1000px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translate3d(0,0,4px)`;
+
+      if (sheenRef.current) {
+        sheenRef.current.style.background = `radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(255, 255, 255, 0.36), transparent 60%)`;
+      }
+    });
   };
 
   const handleLeave = () => {
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
     const el = cardRef.current;
     if (!el) return;
-    el.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+    el.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translate3d(0,0,0)';
   };
 
   return (
@@ -45,4 +56,3 @@ export default function TiltCard3D({ children, className = '', maxTilt = 7 }) {
     </div>
   );
 }
-
