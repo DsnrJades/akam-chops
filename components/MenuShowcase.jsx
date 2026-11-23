@@ -57,7 +57,7 @@ export default function MenuShowcase({ selectedItems, onToggleItem }) {
   };
 
   return (
-    <section id="menu" className="section menu-editorial-section">
+    <section id="menu" className="section menu-editorial-section" data-section-fade>
       <div className="container">
         {/* Top Row: Eyebrow + Headline on Left, Carousel Arrows on Right */}
         <div className="menu-editorial-header" data-reveal="up">

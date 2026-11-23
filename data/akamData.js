@@ -4,7 +4,7 @@
   handle: '@akamchopsabuja',
   tiktok: '@akamchops',
   instagramUrl: 'https://www.instagram.com/akamchopsabuja',
-  address: 'Suite C203, Mab Global Plaza, opposite FCMB Bank, Jabi Upstairs, Abuja (Serving Events Nationwide)',
+  address: 'Suite C203, Mab Global Plaza — Available for Events Everywhere',
   phones: ['0907 227 8229', '0810 448 3435'],
   whatsappNumber: '2349072278229',
   email: 'Akamchopsabuja@gmail.com',
@@ -80,7 +80,7 @@ export const MENU_ITEMS = [
     tag: '50 – 1,000+ Guests',
     rating: '5.0',
     reviews: '190',
-    summary: 'Custom luxury small chops & grill spreads for nationwide celebrations',
+    summary: 'Custom luxury small chops & grill spreads for unforgettable celebrations',
     image: '/images/event-catering.jpg',
   },
   {
@@ -98,19 +98,21 @@ export const EVENT_TIERS = [
   {
     name: 'Intimate Gatherings',
     guests: '30 – 80 Guests',
-    desc: 'Ideal for birthdays, bridal showers, housewarmings, and private family dinners.',
+    badge: 'Private Events',
+    desc: 'Crafted for birthdays, bridal showers, housewarmings, and private family celebrations.',
     featured: false,
     perks: [
       'Curated Small Chops & Peppered Grills',
       'Signature Akam kraft boxes or serving platters',
-      'Optional Akam Naturals Zobo & Tiger Nut pairing',
+      'Optional Akam Naturals chilled drink pairing',
       'Prompt, warm doorstep delivery & setup',
     ],
   },
   {
     name: 'Corporate & Brand Events',
     guests: '80 – 250 Guests',
-    desc: 'Designed for conferences, brand launches, executive summits, and pageants across Nigeria.',
+    badge: 'Most Booked',
+    desc: 'Tailored for conferences, brand launches, executive summits, and VIP hospitality.',
     featured: true,
     perks: [
       'Individual VIP guest boxes with cutlery & mint gum',
@@ -122,12 +124,13 @@ export const EVENT_TIERS = [
   {
     name: 'Grand Weddings & Galas',
     guests: '250 – 1,000+ Guests',
-    desc: 'Full-scale nationwide luxury cocktail hour & small chops service that keeps every table buzzing.',
+    badge: 'Full Service',
+    desc: 'Full-scale luxury cocktail hour & small chops service that keeps every table buzzing.',
     featured: false,
     perks: [
       'High-volume freshly fried small chops & peppered skewers',
       'Uniformed Akam Chops servers & tiered buffet styling',
-      'Custom tasting session prior to your wedding day',
+      'Custom tasting session prior to your celebration',
       'Dedicated Akam Naturals chilled drinks bar',
     ],
   },
@@ -136,20 +139,23 @@ export const EVENT_TIERS = [
 export const REVIEWS = [
   {
     quote:
-      'The complimentary gum that comes together with the cutlery — such a thoughtful touch. You make the best shawarma I have ever tasted so far.',
+      'The complimentary gum that comes together with the cutlery — such a thoughtful touch. Truly the best shawarma I have ever tasted.',
     author: '@__sham.ceeyarht',
-    context: 'Verified Instagram Customer',
+    role: 'Verified Customer',
+    initials: 'SC',
   },
   {
     quote:
       'Lit packaging and genuinely the crispiest samosas and puff-puff. Every box arrived piping hot and camera-ready for our weekend gala.',
-    author: 'Queen of Queens Event Team',
-    context: 'Pageant & VIP Hospitality',
+    author: 'Queen of Queens Team',
+    role: 'Pageant & VIP Hospitality',
+    initials: 'QQ',
   },
   {
     quote:
       'From the peppered gizzard to the chilled Akam Naturals tiger nut milk, our conference guests kept asking who catered the entire spread.',
-    author: 'Corporate Events Partner',
-    context: 'Nationwide Executive Summit',
+    author: 'Executive Events Partner',
+    role: 'Corporate Hospitality',
+    initials: 'EE',
   },
 ];

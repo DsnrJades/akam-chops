@@ -6,7 +6,7 @@ import { Sprout, ChefHat, Globe, Users, ChevronRight } from 'lucide-react';
 const HIGHLIGHTS = [
   { icon: Sprout, line1: 'Fresh', line2: 'Ingredients' },
   { icon: ChefHat, line1: 'Skilled', line2: 'Chefs' },
-  { icon: Globe, line1: 'Nationwide', line2: 'Catering' },
+  { icon: Globe, line1: 'Bespoke', line2: 'Catering' },
 ];
 
 export default function AboutAkam({ onScrollTo }) {
@@ -16,7 +16,7 @@ export default function AboutAkam({ onScrollTo }) {
   };
 
   return (
-    <section id="about" className="section about-akam-section">
+    <section id="about" className="section about-akam-section" data-section-fade>
       <div className="container">
         <div className="about-akam-grid">
           {/* Left: Rounded Editorial Image + Overlapping Orange Experience Badge */}
@@ -54,7 +54,7 @@ export default function AboutAkam({ onScrollTo }) {
             <p className="about-body">
               At Akam Chops, we believe unforgettable gatherings start with bold flavor and fresh
               craft. From crispy samosas and airy puff-puff to loaded shawarma and chilled Akam
-              Naturals, every platter is crafted from scratch for celebrations across Nigeria.
+              Naturals, every platter is crafted from scratch to elevate every celebration.
             </p>
 
             <div className="about-signature">

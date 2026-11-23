@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Utensils, PackageCheck, Clock } from 'lucide-react';
 
 const PILLARS = [
@@ -16,20 +16,20 @@ const PILLARS = [
   },
   {
     icon: Clock,
-    title: 'Effortless Nationwide Execution',
-    desc: 'Whether hosting 40 executives or 1,000+ wedding guests anywhere in Nigeria, our team delivers right on schedule.',
+    title: 'Seamless Event Execution',
+    desc: 'Whether hosting 40 executives or 1,000+ wedding guests, our team delivers right on schedule so you can enjoy every moment.',
   },
 ];
 
 /**
  * Full-Width 1080p Scroll-Scrubbed Video "Why Choose Us" Section
- * - Uses untouched original 1080p video (`/videos/why-choose-us.mp4#t=0.001`)
- * - Smooth lerp scroll scrubbing synced to viewport progress (auto-pauses off-screen)
- * - Three equal-width, equal-height frosted glass cards overlaid cleanly
+ * - Untouched 1080p video scrubbed smoothly on scroll
+ * - Staggered enter/exit animations on the headline & all 3 equal-sized glass cards
  */
 export default function WhyChooseUsVideo() {
   const runwayRef = useRef(null);
   const videoRef = useRef(null);
+  const [isEntered, setIsEntered] = useState(false);
 
   useEffect(() => {
     const runway = runwayRef.current;
@@ -37,6 +37,8 @@ export default function WhyChooseUsVideo() {
     if (!runway || !video) return;
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) setIsEntered(true);
+
     let duration = 0;
     let targetTime = 0;
     let currentTime = 0;
@@ -49,7 +51,7 @@ export default function WhyChooseUsVideo() {
       try {
         video.currentTime = 0.001;
       } catch {
-        // ignore if not yet seekable
+        // ignore
       }
     };
 
@@ -98,7 +100,7 @@ export default function WhyChooseUsVideo() {
           try {
             video.currentTime = currentTime;
           } catch {
-            // ignore transient seek errors
+            // ignore
           }
         }
       }
@@ -113,6 +115,7 @@ export default function WhyChooseUsVideo() {
     const io = new IntersectionObserver(
       ([entry]) => {
         isInView = entry.isIntersecting;
+        setIsEntered(entry.isIntersecting);
         if (isInView) {
           startLoop();
         } else if (rafId) {
@@ -120,7 +123,7 @@ export default function WhyChooseUsVideo() {
           rafId = null;
         }
       },
-      { threshold: 0.01 }
+      { threshold: 0.08 }
     );
     io.observe(runway);
 
@@ -133,7 +136,7 @@ export default function WhyChooseUsVideo() {
   }, []);
 
   return (
-    <section ref={runwayRef} className="why-video-runway">
+    <section ref={runwayRef} className={`why-video-runway ${isEntered ? 'is-entered' : ''}`}>
       <div className="why-sticky-stage">
         <video
           ref={videoRef}
@@ -150,17 +153,17 @@ export default function WhyChooseUsVideo() {
         <div className="why-video-scrim" aria-hidden="true" />
 
         <div className="why-video-content container">
-          <div className="why-header" data-reveal="up">
+          <div className="why-header why-anim-item" style={{ '--why-delay': '40ms' }}>
             <span className="why-eyebrow">
               <span className="eyebrow-dot" />
-              Why Nigeria Chooses Akam Chops
+              Why Choose Akam Chops
             </span>
             <h2 className="why-title">
               Bold Flavor. <span className="accent-text">Obsessive</span> Detail.
             </h2>
             <p className="why-lead">
-              From our flagship kitchen to grand reception halls across Nigeria, every platter is
-              engineered to arrive crisp, aromatic, and camera-ready.
+              From intimate gatherings to grand reception halls, every platter is engineered to
+              arrive crisp, aromatic, and camera-ready.
             </p>
           </div>
 
@@ -170,9 +173,8 @@ export default function WhyChooseUsVideo() {
               return (
                 <article
                   key={pillar.title}
-                  className="why-glass-card"
-                  data-reveal="up"
-                  data-reveal-delay={idx * 90}
+                  className="why-glass-card why-anim-item"
+                  style={{ '--why-delay': `${160 + idx * 120}ms` }}
                 >
                   <div className="why-glass-icon">
                     <Icon size={24} />

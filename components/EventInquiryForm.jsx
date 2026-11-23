@@ -35,7 +35,7 @@ export default function EventInquiryForm({ selectedItems, onRemoveItem, onClearI
       `• Event Type: ${form.eventType}`,
       `• Event Date: ${form.eventDate || 'TBD'}`,
       `• Guest Count: ${form.guestCount}`,
-      `• Event Venue & City: ${form.venue || 'Nigeria'}`,
+      `• Event Venue & Location: ${form.venue || 'To be confirmed'}`,
       `• Interested Menu/Packages: ${itemsText}`,
       form.notes ? `• Notes: ${form.notes}` : null,
     ]
@@ -103,8 +103,8 @@ export default function EventInquiryForm({ selectedItems, onRemoveItem, onClearI
           Request an Event Quote
         </h3>
         <p style={{ color: 'var(--ink-secondary)', fontSize: '0.94rem' }}>
-          No cart or checkout stress. Tell us about your event anywhere in Nigeria — your inquiry
-          goes straight to our catering sheet &amp; inbox at <strong>{BRAND.email}</strong>.
+          No cart or checkout stress. Tell us about your event — your inquiry goes straight to our
+          catering sheet &amp; inbox at <strong>{BRAND.email}</strong>.
         </p>
       </div>
 
@@ -234,13 +234,13 @@ export default function EventInquiryForm({ selectedItems, onRemoveItem, onClearI
         </div>
 
         <div className="form-group">
-          <label htmlFor="venue">Event Venue &amp; City / State *</label>
+          <label htmlFor="venue">Event Venue &amp; Location *</label>
           <input
             id="venue"
             name="venue"
             type="text"
             required
-            placeholder="e.g. Abuja, Lagos, Port Harcourt, Enugu, Kano..."
+            placeholder="e.g. Hotel ballroom, private residence, corporate hall..."
             className="form-input"
             value={form.venue}
             onChange={handleChange}

@@ -22,9 +22,9 @@ export const viewport = {
 };
 
 export const metadata = {
-  title: 'Akam Chops — Premium Small Chops, Shawarma & Nationwide Event Catering',
+  title: 'Akam Chops — Premium Small Chops, Shawarma & Event Catering',
   description:
-    'The Taste You Deserve. Premium Nigerian small chops, signature shawarma, peppered grills, Akam Naturals drinks, and bespoke event catering across Nigeria.',
+    'The Taste You Deserve. Premium small chops, signature shawarma, peppered grills, Akam Naturals drinks, and bespoke event catering.',
   icons: {
     icon: '/images/akam-logo.png',
   },

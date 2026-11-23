@@ -192,7 +192,7 @@ export default function HeroScrollVideo({ onScrollTo }) {
               <div className="hero-rating-num">5K+</div>
               <div className="hero-avatar-stack" aria-hidden="true">
                 <span>AC</span>
-                <span>NG</span>
+                <span>VIP</span>
                 <span>★</span>
               </div>
               <span className="hero-stat-label">Happy Guests</span>
@@ -202,7 +202,7 @@ export default function HeroScrollVideo({ onScrollTo }) {
           {/* Bottom Bar directly beneath the headline */}
           <div className="hero-poster-footer">
             <div className="hero-social-block hero-appear" style={{ '--appear-delay': '380ms' }}>
-              <span className="hero-social-label">Get in Touch · Nationwide</span>
+              <span className="hero-social-label">Get in Touch</span>
               <div className="hero-social-pills">
                 <a
                   href={BRAND.instagramUrl}

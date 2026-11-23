@@ -4,64 +4,109 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import Lenis from 'lenis';
 
 /**
- * Viewport Scroll Reveal System (IntersectionObserver)
+ * Bi-Directional Scroll Reveal + Section-to-Section Cross-Fade Engine
+ * - `[data-reveal]` elements animate smoothly as they enter the viewport (and reverse cleanly if tagged `data-reveal-repeat`)
+ * - `[data-section-fade]` sections smoothly cross-fade out as they exit and fade in as the next enters —
+ *   and smoothly reverse when scrolling back up!
  */
 export function useScrollReveal(deps = []) {
   useEffect(() => {
-    const elements = Array.from(document.querySelectorAll('[data-reveal]'));
-    if (!elements.length) return;
-
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const revealEls = Array.from(document.querySelectorAll('[data-reveal]'));
+    const fadeSections = Array.from(document.querySelectorAll('[data-section-fade]'));
+
     if (prefersReduced || typeof IntersectionObserver === 'undefined') {
-      elements.forEach((el) => el.classList.add('is-visible'));
+      revealEls.forEach((el) => el.classList.add('is-visible'));
+      fadeSections.forEach((sec) => {
+        sec.style.opacity = '1';
+        sec.style.transform = 'none';
+      });
       return;
     }
 
+    // 1. Element-level reveal observer (supports repeat on sections like Why Choose Us)
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          const el = entry.target;
+          const repeat = el.hasAttribute('data-reveal-repeat');
           if (entry.isIntersecting) {
-            const el = entry.target;
             const delay = el.getAttribute('data-reveal-delay');
             if (delay) {
               el.style.setProperty('--reveal-delay', `${delay}ms`);
             }
             el.classList.add('is-visible');
-            observer.unobserve(el);
+            if (!repeat) observer.unobserve(el);
+          } else if (repeat) {
+            el.classList.remove('is-visible');
           }
         });
       },
       {
-        threshold: 0.01,
-        rootMargin: '80px 0px 80px 0px',
+        threshold: 0.04,
+        rootMargin: '40px 0px 40px 0px',
       }
     );
 
-    const revealAboveFold = () => {
+    revealEls.forEach((el) => observer.observe(el));
+
+    // 2. Continuous bi-directional section-to-section cross-fade (GPU opacity + transform)
+    let rafId = null;
+
+    const updateSectionFades = () => {
+      rafId = null;
       const vh = window.innerHeight || 800;
-      elements.forEach((el) => {
-        if (!el.classList.contains('is-visible')) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top < vh + 60) {
-            el.classList.add('is-visible');
-            observer.unobserve(el);
-          }
+
+      for (let i = 0; i < fadeSections.length; i++) {
+        const sec = fadeSections[i];
+        const rect = sec.getBoundingClientRect();
+
+        // Entering from bottom: rect.top moves from vh -> vh * 0.62
+        let enterFactor = 1;
+        if (rect.top > vh * 0.58) {
+          const t = (vh - rect.top) / (vh * 0.42);
+          enterFactor = Math.min(1, Math.max(0, t));
         }
-      });
+
+        // Exiting out top: rect.bottom moves from vh * 0.42 -> 0
+        let exitFactor = 1;
+        if (rect.bottom < vh * 0.42) {
+          const t = rect.bottom / (vh * 0.42);
+          exitFactor = Math.min(1, Math.max(0, t));
+        }
+
+        const visibility = Math.min(enterFactor, exitFactor);
+        // Smooth ease curve so fade feels cinematic in both directions
+        const eased = visibility * visibility * (3 - 2 * visibility);
+        const opacity = 0.14 + eased * 0.86;
+        const yOffset =
+          enterFactor < 1
+            ? (1 - eased) * 28
+            : exitFactor < 1
+              ? -(1 - eased) * 20
+              : 0;
+        const scale = 0.985 + eased * 0.015;
+
+        sec.style.opacity = opacity.toFixed(3);
+        sec.style.transform = `translate3d(0, ${yOffset.toFixed(1)}px, 0) scale(${scale.toFixed(4)})`;
+      }
     };
 
-    elements.forEach((el) => {
-      if (!el.classList.contains('is-visible')) {
-        observer.observe(el);
+    const scheduleFade = () => {
+      if (!rafId) {
+        rafId = requestAnimationFrame(updateSectionFades);
       }
-    });
+    };
 
-    revealAboveFold();
-    window.addEventListener('scroll', revealAboveFold, { passive: true });
+    updateSectionFades();
+    window.addEventListener('scroll', scheduleFade, { passive: true });
+    window.addEventListener('resize', scheduleFade, { passive: true });
 
     return () => {
       observer.disconnect();
-      window.removeEventListener('scroll', revealAboveFold);
+      if (rafId) cancelAnimationFrame(rafId);
+      window.removeEventListener('scroll', scheduleFade);
+      window.removeEventListener('resize', scheduleFade);
     };
   }, deps);
 }
@@ -69,8 +114,7 @@ export function useScrollReveal(deps = []) {
 /**
  * Zero-Re-Render Smooth Scroll Engine:
  * - Navbar stays in hero glass mode until COMPLETELY scrolled past `#experience`
- * - Uses Lenis on desktop wheel/trackpad, and native buttery touch scrolling on mobile phones
- * - Reliable cross-device `scrollToSection(id)` for desktop & mobile browsers
+ * - Uses Lenis on desktop wheel/trackpad, native smooth scrolling on touch devices
  */
 export function useSmoothScroll(sectionIds) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -94,7 +138,6 @@ export function useSmoothScroll(sectionIds) {
       maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
       const heroEl = document.getElementById('experience');
       if (heroEl) {
-        // Only switch navbar after completely scrolling out of the hero runway
         heroExitY = Math.max(120, heroEl.offsetTop + heroEl.offsetHeight - 88);
       } else {
         heroExitY = window.innerHeight;
@@ -194,7 +237,6 @@ export function useSmoothScroll(sectionIds) {
     if (lenisRef.current) {
       lenisRef.current.scrollTo(el, { offset: -16, duration: 1.05 });
     } else {
-      // Section already has 76px top padding, so -16 frames the heading cleanly under the navbar
       const top = el.getBoundingClientRect().top + window.scrollY - 16;
       window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
     }
