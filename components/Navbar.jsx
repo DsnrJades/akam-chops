@@ -6,9 +6,9 @@ import { NAV_LINKS } from '../data/akamData.js';
 
 /**
  * Sticky Glass Navigation Bar:
- * - Genuine Akam Chops transparent logo
- * - Four smooth-scroll links powered by Lenis
- * - GPU-composited scroll progress bar (zero React re-renders on scroll)
+ * - Stays in hero glass mode until completely scrolled past the hero section
+ * - Frosted glass hamburger button & drawer on hero (no white box!)
+ * - Reliable smooth-scroll links on both desktop & mobile browsers
  */
 export default function Navbar({ isScrolled, activeSection, progressBarRef, onScrollTo }) {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -16,9 +16,15 @@ export default function Navbar({ isScrolled, activeSection, progressBarRef, onSc
   const handleNavClick = (e, id) => {
     e.preventDefault();
     setMobileOpen(false);
-    if (onScrollTo) {
-      onScrollTo(id);
-    }
+    // Small defer on mobile so drawer closes cleanly before scrolling
+    requestAnimationFrame(() => {
+      if (onScrollTo) {
+        onScrollTo(id);
+      } else {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
   };
 
   return (
@@ -76,7 +82,11 @@ export default function Navbar({ isScrolled, activeSection, progressBarRef, onSc
       </header>
 
       {mobileOpen && (
-        <div className="mobile-drawer" role="dialog" aria-label="Mobile Navigation">
+        <div
+          className={`mobile-drawer ${isScrolled ? 'is-scrolled' : 'is-hero'}`}
+          role="dialog"
+          aria-label="Mobile Navigation"
+        >
           {NAV_LINKS.map((link) => (
             <a
               key={link.id}

@@ -6,9 +6,10 @@ import { BRAND } from '../data/akamData.js';
 
 /**
  * Full-Bleed 1080p Scroll-Scrubbed Video Hero
- * - Plays original untouched 1080p video (`/videos/hero-samosa.mp4`) scrubbed smoothly by scroll
- * - Editorial poster layout inspired by bold full-width centered display typography
- * - Auto-pauses rAF loop when scrolled past the hero so the rest of the page stays 120fps
+ * - Leaves upper/center frame open for the untouched 1080p exploding samosa -> steaming platter video
+ * - Positions "THE TASTE YOU DESERVE." directly above the bottom buttons
+ * - Floats two equal-sized metrics glass cards symmetrically on both sides of the headline
+ * - Staggered entrance animations for all hero elements on landing
  */
 export default function HeroScrollVideo({ onScrollTo }) {
   const runwayRef = useRef(null);
@@ -29,14 +30,28 @@ export default function HeroScrollVideo({ onScrollTo }) {
     let isInView = true;
     let rafId = null;
     let hintHidden = false;
+    let unlockedMobile = false;
 
     const handleLoadedMetadata = () => {
       duration = Number.isFinite(video.duration) && video.duration > 0 ? video.duration : 4;
-      // Decode and paint the very first frame immediately
       try {
         video.currentTime = 0.001;
       } catch {
-        // ignore if not seekable yet
+        // ignore if not yet seekable
+      }
+    };
+
+    // Mobile iOS/Android decoder warm-up on first touch so scrubbing works smoothly on phones
+    const unlockVideoOnTouch = () => {
+      if (unlockedMobile) return;
+      unlockedMobile = true;
+      const playPromise = video.play();
+      if (playPromise && typeof playPromise.then === 'function') {
+        playPromise
+          .then(() => {
+            video.pause();
+          })
+          .catch(() => {});
       }
     };
 
@@ -46,8 +61,8 @@ export default function HeroScrollVideo({ onScrollTo }) {
       video.addEventListener('loadedmetadata', handleLoadedMetadata);
     }
 
-    // Trigger warm decode so mobile/Safari & Chromium keep frames ready to scrub
     video.load();
+    window.addEventListener('touchstart', unlockVideoOnTouch, { passive: true, once: true });
 
     const computeScrollProgress = () => {
       const rect = runway.getBoundingClientRect();
@@ -65,27 +80,22 @@ export default function HeroScrollVideo({ onScrollTo }) {
 
       const progress = computeScrollProgress();
 
-      // Update subtle bottom micro-progress bar directly on GPU
       if (progressFillRef.current) {
         progressFillRef.current.style.transform = `scaleX(${progress})`;
       }
 
-      // Fade out scroll hint once user starts scrubbing deep into the platter reveal
       const shouldHideHint = progress > 0.22;
       if (shouldHideHint !== hintHidden) {
         hintHidden = shouldHideHint;
         setScrollHintHidden(shouldHideHint);
       }
 
-      // Subtle editorial parallax lift on the giant display headline
       if (headlineRef.current && !prefersReduced) {
-        const yLift = progress * -26;
-        const scale = 1 - progress * 0.04;
-        headlineRef.current.style.transform = `translate3d(0, ${yLift.toFixed(1)}px, 0) scale(${scale.toFixed(4)})`;
+        const yLift = progress * -18;
+        headlineRef.current.style.transform = `translate3d(0, ${yLift.toFixed(1)}px, 0)`;
       }
 
       if (duration > 0 && !prefersReduced) {
-        // Clamp slightly shy of exact end so final steaming platter frame stays crisp
         targetTime = Math.min(duration - 0.04, Math.max(0.001, progress * (duration - 0.04)));
         currentTime += (targetTime - currentTime) * 0.14;
 
@@ -93,7 +103,7 @@ export default function HeroScrollVideo({ onScrollTo }) {
           try {
             video.currentTime = currentTime;
           } catch {
-            // ignore transient seek errors while buffering
+            // ignore transient seek error
           }
         }
       }
@@ -124,6 +134,7 @@ export default function HeroScrollVideo({ onScrollTo }) {
       io.disconnect();
       if (rafId) cancelAnimationFrame(rafId);
       video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      window.removeEventListener('touchstart', unlockVideoOnTouch);
     };
   }, []);
 
@@ -144,6 +155,7 @@ export default function HeroScrollVideo({ onScrollTo }) {
           ref={videoRef}
           className="hero-bg-video"
           src="/videos/hero-samosa.mp4"
+          poster="/images/hero-platter.jpg"
           muted
           playsInline
           preload="auto"
@@ -151,43 +163,45 @@ export default function HeroScrollVideo({ onScrollTo }) {
           aria-hidden="true"
         />
 
-        {/* Subtle radial & edge vignette so white poster typography stays razor-sharp */}
         <div className="hero-video-scrim" aria-hidden="true" />
 
-        {/* Editorial Poster Overlay matching inspiration layout */}
+        {/* Lower-Anchored Editorial Poster Overlay */}
         <div className="hero-poster-content container">
-          {/* Top Centered Stacked Display Headline */}
-          <div ref={headlineRef} className="hero-poster-header">
-            <p className="hero-poster-kicker">THE TASTE YOU</p>
-            <h1 className="hero-poster-title">DESERVE.</h1>
-          </div>
-
-          {/* Middle Left & Right Trust / Social Proof Anchors */}
-          <div className="hero-poster-sides">
-            <div className="hero-side-stat hero-side-left">
+          {/* Symmetrical Lower Centerpiece: [Left Metric] [THE TASTE YOU DESERVE.] [Right Metric] */}
+          <div className="hero-centerpiece">
+            <div className="hero-side-stat hero-appear" style={{ '--appear-delay': '260ms' }}>
               <div className="hero-rating-num">4.9</div>
               <div className="hero-rating-stars" aria-label="4.9 out of 5 stars">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={15} fill="currentColor" />
+                  <Star key={i} size={14} fill="currentColor" />
                 ))}
               </div>
               <span className="hero-stat-label">Customer Rating</span>
             </div>
 
-            <div className="hero-side-stat hero-side-right">
+            <div
+              ref={headlineRef}
+              className="hero-poster-header hero-appear"
+              style={{ '--appear-delay': '100ms' }}
+            >
+              <p className="hero-poster-kicker">THE TASTE YOU</p>
+              <h1 className="hero-poster-title">DESERVE.</h1>
+            </div>
+
+            <div className="hero-side-stat hero-appear" style={{ '--appear-delay': '260ms' }}>
               <div className="hero-rating-num">5K+</div>
               <div className="hero-avatar-stack" aria-hidden="true">
                 <span>AC</span>
                 <span>NG</span>
                 <span>★</span>
               </div>
-              <span className="hero-stat-label">Happy Guests Nationwide</span>
+              <span className="hero-stat-label">Happy Guests</span>
             </div>
           </div>
 
-          {/* Bottom Bar: Left Social Quick-Links, Center Scroll Cue, Right White Pill CTA */}
+          {/* Bottom Bar directly beneath the headline */}
           <div className="hero-poster-footer">
-            <div className="hero-social-block">
+            <div className="hero-social-block hero-appear" style={{ '--appear-delay': '380ms' }}>
               <span className="hero-social-label">Get in Touch · Nationwide</span>
               <div className="hero-social-pills">
                 <a
@@ -211,7 +225,10 @@ export default function HeroScrollVideo({ onScrollTo }) {
               </div>
             </div>
 
-            <div className={`hero-scroll-cue ${scrollHintHidden ? 'is-hidden' : ''}`}>
+            <div
+              className={`hero-scroll-cue hero-appear ${scrollHintHidden ? 'is-hidden' : ''}`}
+              style={{ '--appear-delay': '460ms' }}
+            >
               <span>Scroll to experience</span>
               <ChevronDown size={15} />
               <div className="hero-scrub-track">
@@ -219,7 +236,7 @@ export default function HeroScrollVideo({ onScrollTo }) {
               </div>
             </div>
 
-            <div className="hero-footer-cta">
+            <div className="hero-footer-cta hero-appear" style={{ '--appear-delay': '380ms' }}>
               <a
                 href="#contact"
                 className="hero-white-cta"

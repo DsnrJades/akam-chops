@@ -5,7 +5,6 @@ import Lenis from 'lenis';
 
 /**
  * Viewport Scroll Reveal System (IntersectionObserver)
- * Releases `will-change` after reveal to keep GPU memory low and scroll silky smooth.
  */
 export function useScrollReveal(deps = []) {
   useEffect(() => {
@@ -49,10 +48,10 @@ export function useScrollReveal(deps = []) {
 }
 
 /**
- * Zero-Re-Render Smooth Scroll Engine (Lenis + rAF GPU progress bar)
- * - Uses Lenis for buttery inertial scrolling on mouse wheel & trackpad
- * - Updates the top scroll progress bar directly via DOM `transform: scaleX()` (0 React re-renders!)
- * - Caches section offsets and only updates `isScrolled` / `activeSection` when they actually change
+ * Zero-Re-Render Smooth Scroll Engine:
+ * - Navbar stays in hero glass mode until COMPLETELY scrolled past `#experience`
+ * - Uses Lenis on desktop wheel/trackpad, and native buttery touch scrolling on mobile phones
+ * - Reliable cross-device `scrollToSection(id)` for desktop & mobile browsers
  */
 export function useSmoothScroll(sectionIds) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -65,12 +64,23 @@ export function useSmoothScroll(sectionIds) {
 
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isTouchDevice =
+      window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
 
     let sectionOffsets = [];
     let maxScroll = 1;
+    let heroExitY = window.innerHeight;
 
     const measureLayout = () => {
       maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const heroEl = document.getElementById('experience');
+      if (heroEl) {
+        // Only switch navbar after completely scrolling out of the hero runway
+        heroExitY = Math.max(120, heroEl.offsetTop + heroEl.offsetHeight - 88);
+      } else {
+        heroExitY = window.innerHeight;
+      }
+
       sectionOffsets = sectionIds
         .map((id) => {
           const el = document.getElementById(id);
@@ -80,20 +90,17 @@ export function useSmoothScroll(sectionIds) {
     };
 
     const updateOnScroll = (y) => {
-      // 1. Direct GPU-composited progress bar update (no React re-render)
       if (progressBarRef.current) {
         const ratio = Math.min(1, Math.max(0, y / maxScroll));
         progressBarRef.current.style.transform = `scaleX(${ratio})`;
       }
 
-      // 2. Glass navbar toggle only on threshold crossing
-      const scrolledNow = y > 24;
-      if (scrolledNow !== isScrolledRef.current) {
-        isScrolledRef.current = scrolledNow;
-        setIsScrolled(scrolledNow);
+      const scrolledPastHero = y >= heroExitY;
+      if (scrolledPastHero !== isScrolledRef.current) {
+        isScrolledRef.current = scrolledPastHero;
+        setIsScrolled(scrolledPastHero);
       }
 
-      // 3. Active nav link update only when section changes
       const probe = y + 180;
       let current = sectionIds[0];
       for (let i = 0; i < sectionOffsets.length; i++) {
@@ -113,13 +120,12 @@ export function useSmoothScroll(sectionIds) {
     let rafId = null;
     let lenis = null;
 
-    if (!prefersReduced) {
+    if (!prefersReduced && !isTouchDevice) {
       lenis = new Lenis({
         lerp: 0.095,
         duration: 1.05,
         smoothWheel: true,
         wheelMultiplier: 1,
-        touchMultiplier: 1.5,
       });
       lenisRef.current = lenis;
 
@@ -135,7 +141,16 @@ export function useSmoothScroll(sectionIds) {
     } else {
       const onNativeScroll = () => updateOnScroll(window.scrollY);
       window.addEventListener('scroll', onNativeScroll, { passive: true });
-      return () => window.removeEventListener('scroll', onNativeScroll);
+
+      const resizeObserver = new ResizeObserver(() => measureLayout());
+      resizeObserver.observe(document.body);
+      window.addEventListener('resize', measureLayout, { passive: true });
+
+      return () => {
+        window.removeEventListener('scroll', onNativeScroll);
+        resizeObserver.disconnect();
+        window.removeEventListener('resize', measureLayout);
+      };
     }
 
     const resizeObserver = new ResizeObserver(() => measureLayout());
@@ -154,10 +169,13 @@ export function useSmoothScroll(sectionIds) {
   const scrollToSection = useCallback((id) => {
     const el = document.getElementById(id);
     if (!el) return;
+
     if (lenisRef.current) {
-      lenisRef.current.scrollTo(el, { offset: -84, duration: 1.1 });
+      lenisRef.current.scrollTo(el, { offset: -84, duration: 1.05 });
     } else {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Rock-solid smooth scroll for mobile Safari / Chrome
+      const top = el.getBoundingClientRect().top + window.scrollY - 78;
+      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
     }
   }, []);
 
