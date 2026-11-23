@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { ArrowRight, Star, Instagram, MessageCircle, ChevronDown } from 'lucide-react';
 import { BRAND } from '../data/akamData.js';
 
@@ -237,16 +238,12 @@ export default function HeroScrollVideo({ onScrollTo }) {
             </div>
 
             <div className="hero-footer-cta hero-appear" style={{ '--appear-delay': '380ms' }}>
-              <a
-                href="#contact"
-                className="hero-white-cta"
-                onClick={(e) => handleCtaClick(e, 'contact')}
-              >
+              <Link href="/contact" className="hero-white-cta">
                 Request Event Quote
                 <span className="hero-white-cta-icon">
                   <ArrowRight size={16} />
                 </span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>

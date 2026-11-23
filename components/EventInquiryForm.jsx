@@ -15,7 +15,12 @@ const INITIAL_FORM = {
   notes: '',
 };
 
-export default function EventInquiryForm({ selectedItems, onRemoveItem, onClearItems }) {
+export default function EventInquiryForm({
+  selectedItems,
+  onRemoveItem,
+  onClearItems,
+  variant = 'default',
+}) {
   const [form, setForm] = useState(INITIAL_FORM);
   const [status, setStatus] = useState('idle'); // idle | submitting | success | error
   const [feedback, setFeedback] = useState('');
@@ -93,19 +98,31 @@ export default function EventInquiryForm({ selectedItems, onRemoveItem, onClearI
   )}&body=${encodeURIComponent(buildSummaryText())}`;
 
   return (
-    <div className="inquiry-form-card" data-reveal="left">
+    <div className={variant === 'contact-page' ? 'contact-form-panel' : 'inquiry-form-card'}>
       <div style={{ marginBottom: 24 }}>
-        <span className="eyebrow" style={{ marginBottom: 12 }}>
-          <span className="eyebrow-dot" />
-          Zero-Hassle Event Booking
-        </span>
-        <h3 className="display-md" style={{ marginBottom: 8 }}>
-          Request an Event Quote
-        </h3>
-        <p style={{ color: 'var(--ink-secondary)', fontSize: '0.94rem' }}>
-          No cart or checkout stress. Tell us about your event — your inquiry goes straight to our
-          catering sheet &amp; inbox at <strong>{BRAND.email}</strong>.
-        </p>
+        {variant === 'contact-page' ? (
+          <>
+            <h2 className="contact-form-title">Get In Touch</h2>
+            <p style={{ color: 'var(--ink-secondary)', fontSize: '0.94rem' }}>
+              Share your event details below — your inquiry goes straight to our catering sheet
+              &amp; inbox at <strong>{BRAND.email}</strong>.
+            </p>
+          </>
+        ) : (
+          <>
+            <span className="eyebrow" style={{ marginBottom: 12 }}>
+              <span className="eyebrow-dot" />
+              Zero-Hassle Event Booking
+            </span>
+            <h3 className="display-md" style={{ marginBottom: 8 }}>
+              Request an Event Quote
+            </h3>
+            <p style={{ color: 'var(--ink-secondary)', fontSize: '0.94rem' }}>
+              No cart or checkout stress. Tell us about your event — your inquiry goes straight to
+              our catering sheet &amp; inbox at <strong>{BRAND.email}</strong>.
+            </p>
+          </>
+        )}
       </div>
 
       {selectedItems.length > 0 && (

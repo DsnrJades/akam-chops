@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { Sprout, ChefHat, Globe, Users, ChevronRight } from 'lucide-react';
 
 const HIGHLIGHTS = [
@@ -9,12 +10,7 @@ const HIGHLIGHTS = [
   { icon: Globe, line1: 'Bespoke', line2: 'Catering' },
 ];
 
-export default function AboutAkam({ onScrollTo }) {
-  const handleCta = (e) => {
-    e.preventDefault();
-    if (onScrollTo) onScrollTo('contact');
-  };
-
+export default function AboutAkam() {
   return (
     <section id="about" className="section about-akam-section" data-section-fade>
       <div className="container">
@@ -41,7 +37,7 @@ export default function AboutAkam({ onScrollTo }) {
             </div>
           </div>
 
-          {/* Center: Editorial Story Copy + Akam Chops Script Signature + CTA */}
+          {/* Center: Editorial Story Copy + CTA (logo removed as requested) */}
           <div className="about-story-col" data-reveal="up" data-reveal-delay="80">
             <p className="about-kicker">WELCOME TO AKAM CHOPS</p>
 
@@ -57,15 +53,11 @@ export default function AboutAkam({ onScrollTo }) {
               Naturals, every platter is crafted from scratch to elevate every celebration.
             </p>
 
-            <div className="about-signature">
-              <img src="/images/akam-logo.png" alt="Akam Chops signature" width={118} height={56} />
-            </div>
-
-            <div>
-              <a href="#contact" className="about-dark-cta" onClick={handleCta}>
+            <div style={{ marginTop: 6 }}>
+              <Link href="/contact" className="about-dark-cta">
                 BOOK AN EVENT
                 <ChevronRight size={16} />
-              </a>
+              </Link>
             </div>
           </div>
 

@@ -1916,35 +1916,43 @@ a {
 
 @media (max-width: 900px) {
   .why-video-runway {
-    height: 190vh;
+    height: auto;
+    min-height: 140vh;
+  }
+  .why-sticky-stage {
+    min-height: 100dvh;
+    height: auto;
+    align-items: flex-start;
+    overflow: visible;
   }
   .why-video-content {
-    padding: 76px 0 24px;
-    gap: 18px;
+    padding: 88px 0 44px;
+    gap: 20px;
   }
   .why-lead {
     display: none;
   }
   .why-glass-grid {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 14px;
   }
   .why-glass-card {
-    min-height: 128px;
-    padding: 16px 18px;
+    min-height: 132px;
+    height: auto;
+    padding: 18px 20px;
     gap: 8px;
   }
   .why-glass-icon {
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
   }
   .why-glass-card h3 {
-    font-size: 1.06rem;
+    font-size: 1.08rem;
   }
   .why-glass-card p {
-    font-size: 0.82rem;
-    line-height: 1.45;
+    font-size: 0.85rem;
+    line-height: 1.5;
   }
 }
 
@@ -2597,7 +2605,440 @@ a {
 }
 
 /* ==========================================================================
-   FOOTER
+   PRE-FOOTER CTA BANNER (INSPIRED BY "SNACK HAPPY")
+   ========================================================================== */
+
+.prefooter-cta-section {
+  background: var(--bg-canvas);
+  padding: 64px 0 96px;
+}
+
+.prefooter-banner {
+  display: grid;
+  grid-template-columns: 1.15fr 0.95fr 0.72fr;
+  align-items: center;
+  gap: 28px;
+  padding: clamp(28px, 4vw, 46px) clamp(26px, 4.5vw, 54px);
+  border-radius: 32px;
+  background: linear-gradient(125deg, #ffe7b8 0%, #ffd99c 55%, #ffcf87 100%);
+  border: 1px solid rgba(232, 82, 26, 0.14);
+  box-shadow: 0 24px 60px -20px rgba(180, 90, 20, 0.22);
+  overflow: hidden;
+  position: relative;
+}
+
+.prefooter-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.prefooter-kicker {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #7c3a14;
+}
+
+.prefooter-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.1rem, 4vw, 3.45rem);
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+  color: #2b1408;
+}
+
+.prefooter-heart {
+  color: var(--orange-primary);
+}
+
+.prefooter-sub {
+  font-size: 0.96rem;
+  font-weight: 500;
+  color: #542d16;
+  max-width: 340px;
+}
+
+.prefooter-dark-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  padding: 13px 24px;
+  border-radius: var(--radius-pill);
+  background: #2b1408;
+  color: #fffdf9;
+  font-size: 0.9rem;
+  font-weight: 700;
+  touch-action: manipulation;
+  box-shadow: 0 14px 28px -10px rgba(43, 20, 8, 0.45);
+  transition: transform 0.25s var(--ease-expo), background-color 0.25s ease;
+}
+
+.prefooter-dark-btn:hover {
+  background: var(--orange-primary);
+  transform: translateY(-2px);
+}
+
+.prefooter-center {
+  display: flex;
+  justify-content: center;
+}
+
+.prefooter-photo-frame {
+  width: min(300px, 100%);
+  aspect-ratio: 4 / 3.1;
+  border-radius: 26px;
+  overflow: hidden;
+  box-shadow: 0 22px 44px -16px rgba(43, 20, 8, 0.34);
+  border: 4px solid rgba(255, 253, 249, 0.72);
+}
+
+.prefooter-photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease-expo);
+}
+
+.prefooter-banner:hover .prefooter-photo-frame img {
+  transform: scale(1.06);
+}
+
+.prefooter-right {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-left: 12px;
+}
+
+.prefooter-perk {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #2b1408;
+}
+
+.prefooter-perk-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 253, 249, 0.62);
+  color: #2b1408;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.prefooter-perk-text {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+@media (max-width: 960px) {
+  .prefooter-banner {
+    grid-template-columns: 1fr;
+    text-align: center;
+    justify-items: center;
+    gap: 24px;
+  }
+  .prefooter-left {
+    align-items: center;
+  }
+  .prefooter-right {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-left: 0;
+    gap: 16px 24px;
+  }
+  .prefooter-perk {
+    text-align: left;
+  }
+}
+
+/* ==========================================================================
+   DEDICATED /contact PAGE (INSPIRED BY BREAD TALE CONTACT US)
+   ========================================================================== */
+
+.contact-page-shell {
+  min-height: 100vh;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-hero-banner {
+  background: #faf6f0;
+  padding-top: 132px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-subtle);
+  overflow: hidden;
+}
+
+.contact-hero-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 44px;
+}
+
+.contact-hero-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.6rem, 5vw, 4.1rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: var(--ink-primary);
+}
+
+.contact-hero-sub {
+  max-width: 560px;
+  font-size: 1rem;
+  color: var(--ink-secondary);
+  line-height: 1.65;
+}
+
+.contact-hero-strip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  height: 112px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.contact-hero-strip img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 640px) {
+  .contact-hero-strip {
+    grid-template-columns: repeat(3, 1fr);
+    height: 84px;
+  }
+  .contact-hero-strip img:nth-child(n + 4) {
+    display: none;
+  }
+}
+
+.contact-page-main {
+  flex: 1;
+  padding: 72px 0 96px;
+  background: #ffffff;
+}
+
+.contact-page-grid {
+  display: grid;
+  grid-template-columns: 0.92fr 1.08fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.contact-left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.contact-cards-2x2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.contact-mini-card {
+  background: #faf6f1;
+  border: 1px solid rgba(20, 18, 16, 0.06);
+  border-radius: 18px;
+  padding: 28px 18px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 162px;
+  transition: transform 0.25s var(--ease-expo), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.contact-mini-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-warm);
+  box-shadow: var(--shadow-soft);
+}
+
+.contact-mini-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--bg-tint-orange);
+  color: var(--orange-deep);
+  display: grid;
+  place-items: center;
+  margin-bottom: 6px;
+}
+
+.contact-mini-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--ink-primary);
+}
+
+.contact-mini-card p {
+  font-size: 0.86rem;
+  color: var(--ink-secondary);
+  line-height: 1.4;
+}
+
+.contact-mini-email {
+  word-break: break-all;
+}
+
+.contact-map-card {
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-soft);
+  height: 270px;
+  background: var(--bg-surface-warm);
+}
+
+.contact-map-card iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.contact-form-panel {
+  background: #ffffff;
+  padding: 4px 0;
+}
+
+.contact-form-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.9rem, 3vw, 2.5rem);
+  letter-spacing: -0.03em;
+  color: var(--ink-primary);
+  margin-bottom: 8px;
+}
+
+@media (max-width: 900px) {
+  .contact-page-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-cards-2x2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   SHARED DARK ESPRESSO FOOTER (INSPIRED BY CONTACT PAGE FOOTER)
+   ========================================================================== */
+
+.site-footer-dark {
+  background: #2c1810;
+  color: rgba(255, 248, 240, 0.86);
+  padding: 68px 0 32px;
+}
+
+.footer-dark-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 0.75fr 0.85fr 1.15fr;
+  gap: 36px;
+  padding-bottom: 42px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.footer-dark-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.footer-dark-brand p {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: rgba(255, 248, 240, 0.72);
+  max-width: 320px;
+}
+
+.footer-dark-col h4 {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 16px;
+}
+
+.footer-dark-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-dark-col a {
+  font-size: 0.9rem;
+  color: rgba(255, 248, 240, 0.76);
+  transition: color 0.2s ease;
+}
+
+.footer-dark-col a:hover {
+  color: var(--orange-vivid);
+}
+
+.footer-contact-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: rgba(255, 248, 240, 0.78);
+}
+
+.footer-contact-list svg {
+  color: var(--orange-vivid);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.footer-dark-bottom {
+  padding-top: 24px;
+  text-align: center;
+  font-size: 0.84rem;
+  color: rgba(255, 248, 240, 0.56);
+}
+
+@media (max-width: 900px) {
+  .footer-dark-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+}
+
+@media (max-width: 560px) {
+  .footer-dark-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   FOOTER (Legacy)
    ========================================================================== */
 
 .footer {

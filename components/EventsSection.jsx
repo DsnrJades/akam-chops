@@ -1,15 +1,11 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { ArrowRight, Check, Sparkles } from 'lucide-react';
 import { EVENT_TIERS } from '../data/akamData.js';
 
-export default function EventsSection({ onSelectPackage, onScrollTo }) {
-  const handlePlanClick = (e) => {
-    e.preventDefault();
-    if (onScrollTo) onScrollTo('contact');
-  };
-
+export default function EventsSection({ onSelectPackage }) {
   return (
     <section id="events" className="section events-editorial-section" data-section-fade>
       <div className="container">
@@ -49,10 +45,10 @@ export default function EventsSection({ onSelectPackage, onScrollTo }) {
               for a complete, memorable refreshment experience for every guest.
             </p>
             <div>
-              <a href="#contact" className="btn btn-primary" onClick={handlePlanClick}>
+              <Link href="/contact" className="btn btn-primary">
                 Plan Your Event Menu
                 <ArrowRight size={17} />
-              </a>
+              </Link>
             </div>
           </div>
         </div>
