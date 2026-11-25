@@ -9,7 +9,7 @@ export default function EventsSection({ onSelectPackage }) {
   return (
     <section id="events" className="section events-editorial-section" data-section-fade>
       <div className="container">
-        {/* Top Editorial Header matching Menu & About typography */}
+        {/* Top Editorial Header */}
         <div className="events-editorial-header" data-reveal="up">
           <div>
             <p className="menu-kicker">EVENT CATERING</p>
@@ -53,45 +53,49 @@ export default function EventsSection({ onSelectPackage }) {
           </div>
         </div>
 
-        {/* 3 Equal-Width, Equal-Height Editorial Catering Cards */}
+        {/* 3 Equal-Sized Nested Event Type Cards (inspired by A/B inset-header card system) */}
         <div className="events-equal-grid">
           {EVENT_TIERS.map((tier, idx) => (
             <article
               key={tier.name}
-              className={`events-equal-card ${tier.featured ? 'is-featured' : ''}`}
+              className={`event-tier-shell ${tier.featured ? 'is-featured' : ''}`}
               data-reveal="up"
               data-reveal-delay={idx * 90}
             >
-              <div className="events-card-body">
-                <div className="events-card-top">
-                  <span className="events-guests-pill">{tier.guests}</span>
-                  <span className={`events-badge-label ${tier.featured ? 'is-featured' : ''}`}>
-                    {tier.featured ? '★ ' : ''}
-                    {tier.badge}
-                  </span>
+              {/* Top Inset Panel (soft warm neutral on standard, warm orange mesh gradient on featured) */}
+              <div className={`event-tier-topbox ${tier.featured ? 'is-gradient' : ''}`}>
+                <div className="event-tier-name-row">
+                  <span className="event-tier-name">{tier.name}</span>
+                  {tier.featured && <span className="event-tier-star">★ {tier.badge}</span>}
                 </div>
 
-                <h3 className="events-card-title">{tier.name}</h3>
-                <p className="events-card-desc">{tier.desc}</p>
+                <div className="event-tier-metric">
+                  <strong>{tier.guestNumber}</strong>
+                  <span>{tier.guestUnit}</span>
+                </div>
 
-                <ul className="tier-list">
-                  {tier.perks.map((perk) => (
-                    <li key={perk}>
-                      <Check size={16} />
-                      <span>{perk}</span>
-                    </li>
-                  ))}
-                </ul>
+                <p className="event-tier-desc">{tier.desc}</p>
+
+                <button
+                  type="button"
+                  className="event-tier-dark-btn"
+                  onClick={() => onSelectPackage(`${tier.name} (${tier.guests})`)}
+                >
+                  Request Quote
+                </button>
               </div>
 
-              <button
-                type="button"
-                className={`btn ${tier.featured ? 'btn-primary' : 'btn-secondary'} events-card-cta`}
-                onClick={() => onSelectPackage(`${tier.name} (${tier.guests})`)}
-              >
-                Request {tier.name} Quote
-                <ArrowRight size={16} />
-              </button>
+              {/* Bottom Pure White Perks Checklist */}
+              <ul className="event-tier-checklist">
+                {tier.perks.map((perk) => (
+                  <li key={perk}>
+                    <span className="event-check-circle" aria-hidden="true">
+                      <Check size={12} strokeWidth={2.6} />
+                    </span>
+                    <span>{perk}</span>
+                  </li>
+                ))}
+              </ul>
             </article>
           ))}
         </div>
