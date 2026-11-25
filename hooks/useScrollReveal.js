@@ -131,17 +131,23 @@ export function useSmoothScroll(sectionIds) {
       window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
 
     let sectionOffsets = [];
+    let darkRanges = [];
     let maxScroll = 1;
-    let heroExitY = window.innerHeight;
 
     const measureLayout = () => {
       maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      const heroEl = document.getElementById('experience');
-      if (heroEl) {
-        heroExitY = Math.max(120, heroEl.offsetTop + heroEl.offsetHeight - 88);
-      } else {
-        heroExitY = window.innerHeight;
-      }
+
+      // Measure both full-bleed dark video sections (#experience and #why-choose-us)
+      darkRanges = ['experience', 'why-choose-us']
+        .map((id) => {
+          const el = document.getElementById(id);
+          if (!el) return null;
+          return {
+            start: Math.max(0, el.offsetTop - 56),
+            end: el.offsetTop + el.offsetHeight - 80,
+          };
+        })
+        .filter(Boolean);
 
       sectionOffsets = sectionIds
         .map((id) => {
@@ -157,10 +163,12 @@ export function useSmoothScroll(sectionIds) {
         progressBarRef.current.style.transform = `scaleX(${ratio})`;
       }
 
-      const scrolledPastHero = y >= heroExitY;
-      if (scrolledPastHero !== isScrolledRef.current) {
-        isScrolledRef.current = scrolledPastHero;
-        setIsScrolled(scrolledPastHero);
+      // Keep dark-glass hero navbar whenever overlapping Hero OR Why Choose Us video sections
+      const isOverDarkVideo = darkRanges.some((r) => y >= r.start && y < r.end);
+      const useLightNavbar = !isOverDarkVideo;
+      if (useLightNavbar !== isScrolledRef.current) {
+        isScrolledRef.current = useLightNavbar;
+        setIsScrolled(useLightNavbar);
       }
 
       const probe = y + 180;

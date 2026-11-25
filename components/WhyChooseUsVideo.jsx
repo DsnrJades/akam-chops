@@ -136,7 +136,7 @@ export default function WhyChooseUsVideo() {
   }, []);
 
   return (
-    <section ref={runwayRef} className={`why-video-runway ${isEntered ? 'is-entered' : ''}`}>
+    <section id="why-choose-us" ref={runwayRef} className={`why-video-runway ${isEntered ? 'is-entered' : ''}`}>
       <div className="why-sticky-stage">
         <video
           ref={videoRef}
