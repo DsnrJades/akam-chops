@@ -1424,33 +1424,33 @@ a {
   border: 1px solid var(--border-subtle);
   display: grid;
   place-items: center;
-  cursor: pointer;
   touch-action: manipulation;
-  transition: transform 0.25s var(--ease-expo), box-shadow 0.25s ease, background-color 0.25s ease;
+  transition: transform 0.25s var(--ease-expo), box-shadow 0.25s ease,
+    background-color 0.25s ease, color 0.25s ease, opacity 0.25s ease, border-color 0.25s ease;
 }
 
-.menu-arrow-prev {
-  background: #ffffff;
-  color: var(--ink-primary);
-  box-shadow: var(--shadow-soft);
-}
-
-.menu-arrow-prev:hover {
-  transform: translateY(-2px);
-  border-color: var(--orange-primary);
-  color: var(--orange-primary);
-}
-
-.menu-arrow-next {
+.menu-arrow-btn.is-active {
   background: var(--orange-primary);
   color: #ffffff;
   border-color: var(--orange-primary);
   box-shadow: var(--shadow-orange);
+  cursor: pointer;
 }
 
-.menu-arrow-next:hover {
+.menu-arrow-btn.is-active:hover {
   transform: translateY(-2px);
   background: var(--orange-deep);
+}
+
+.menu-arrow-btn.is-inactive,
+.menu-arrow-btn:disabled {
+  background: #ffffff;
+  color: var(--ink-muted);
+  border-color: var(--border-subtle);
+  box-shadow: none;
+  opacity: 0.42;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .menu-editorial-body {

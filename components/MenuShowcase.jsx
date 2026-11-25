@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   ChevronLeft,
   ChevronRight,
@@ -26,12 +26,37 @@ const SIDEBAR_CATS = [
 export default function MenuShowcase({ selectedItems, onToggleItem }) {
   const [activeCat, setActiveCat] = useState('all');
   const [favorites, setFavorites] = useState([]);
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
   const trackRef = useRef(null);
 
   const visibleItems =
     activeCat === 'all'
       ? MENU_ITEMS
       : MENU_ITEMS.filter((item) => item.categoryId === activeCat);
+
+  const updateScrollButtons = useCallback(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    setCanScrollPrev(el.scrollLeft > 4);
+    setCanScrollNext(maxScroll > 4 && el.scrollLeft < maxScroll - 4);
+  }, []);
+
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+
+    const rafId = requestAnimationFrame(updateScrollButtons);
+    el.addEventListener('scroll', updateScrollButtons, { passive: true });
+    window.addEventListener('resize', updateScrollButtons, { passive: true });
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      el.removeEventListener('scroll', updateScrollButtons);
+      window.removeEventListener('resize', updateScrollButtons);
+    };
+  }, [activeCat, updateScrollButtons]);
 
   const scrollTrack = (direction) => {
     const el = trackRef.current;
@@ -52,14 +77,15 @@ export default function MenuShowcase({ selectedItems, onToggleItem }) {
   const handleCategoryChange = (catId) => {
     setActiveCat(catId);
     if (trackRef.current) {
-      trackRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+      trackRef.current.scrollTo({ left: 0, behavior: 'auto' });
+      requestAnimationFrame(updateScrollButtons);
     }
   };
 
   return (
     <section id="menu" className="section menu-editorial-section" data-section-fade>
       <div className="container">
-        {/* Top Row: Eyebrow + Headline on Left, Carousel Arrows on Right */}
+        {/* Top Row: Eyebrow + Headline on Left, Smart Carousel Arrows on Right */}
         <div className="menu-editorial-header" data-reveal="up">
           <div>
             <p className="menu-kicker">EXPLORE OUR MENU</p>
@@ -71,16 +97,18 @@ export default function MenuShowcase({ selectedItems, onToggleItem }) {
           <div className="menu-carousel-arrows" aria-label="Scroll menu cards">
             <button
               type="button"
-              className="menu-arrow-btn menu-arrow-prev"
+              className={`menu-arrow-btn ${canScrollPrev ? 'is-active' : 'is-inactive'}`}
               onClick={() => scrollTrack(-1)}
+              disabled={!canScrollPrev}
               aria-label="Previous menu items"
             >
               <ChevronLeft size={20} />
             </button>
             <button
               type="button"
-              className="menu-arrow-btn menu-arrow-next"
+              className={`menu-arrow-btn ${canScrollNext ? 'is-active' : 'is-inactive'}`}
               onClick={() => scrollTrack(1)}
+              disabled={!canScrollNext}
               aria-label="Next menu items"
             >
               <ChevronRight size={20} />
