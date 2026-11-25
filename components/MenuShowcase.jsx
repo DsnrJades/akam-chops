@@ -156,17 +156,9 @@ export default function MenuShowcase({ selectedItems, onToggleItem }) {
                   />
                   <div className="menu-photo-scrim" aria-hidden="true" />
 
-                  {/* Top Badges Row */}
+                  {/* Top Badge Row */}
                   <div className="menu-photo-top">
                     <span className="menu-photo-badge">{item.tag}</span>
-                    <button
-                      type="button"
-                      className={`menu-heart-btn ${isFav ? 'is-loved' : ''}`}
-                      onClick={() => toggleFavorite(item.name)}
-                      aria-label={`Save ${item.name}`}
-                    >
-                      <Heart size={16} fill={isFav ? 'currentColor' : 'none'} />
-                    </button>
                   </div>
 
                   {/* Bottom Details + CTA Row */}
